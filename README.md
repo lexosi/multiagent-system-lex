@@ -1,8 +1,20 @@
 # multiagent-system
 
+> **Process discipline enforced by hooks, not good faith.**
+> A root-driven multi-agent harness where enforcement is a first-class layer:
+> advisories that measured **0% compliance** in practice were replaced with
+> hard blocks that deny the action outright.
+
 A root-driven multi-agent orchestration system built on Claude Code's native subagents, augmented with a small set of Python worker wrappers that call a secondary LLM provider directly. It coordinates debugging and feature work across multiple language/runtime domains (Verse/UEFN, Python, Rust, Java, TypeScript) through specialized agents, artifact-based handoff, and enforcement hooks.
 
-The architecture is deliberately **root-driven**: a single main thread ("root") is the only physical invoker of subagents. Root produces an explicit plan, invokes one specialist per step, collects each report, and decides the next step — subagents never orchestrate each other. Work is handed off through on-disk artifacts (per-run plan, hypotheses, reports) rather than shared mutable state, and a layer of hooks enforces session discipline (path substitution at session start, protected-file guards, role/scope advisories, and reactive end-of-turn checks).
+The architecture is deliberately **root-driven**: a single main thread ("root") is the only physical invoker of subagents. Root produces an explicit plan, invokes one specialist per step, collects each report, and decides the next step — subagents never orchestrate each other. Work is handed off through on-disk artifacts (per-run plan, hypotheses, reports) rather than shared mutable state, and a layer of hooks enforces session discipline (path substitution at session start, protected-file guards, role/scope enforcement, and reactive end-of-turn checks).
+
+## Engineering highlights
+
+- **Role-discipline hard-block.** Specialized agents own their territory — planner owns plans, implementer owns templates, curator owns reports — and the orchestrator can't usurp them. Enforced per-action by a `PreToolUse` hook that discriminates the caller by `agent_type`; root authorizes a single edit via a one-shot, TTL-bounded override file, **not** a session-wide bypass. Built after an advisory-only version was measured to produce **0% behavioral change**.
+- **Anti-sycophancy, in layers.** "No changes needed" and "no blockers" are valid outputs. Agents are constrained not to invent work to look productive: implementer touches one file per turn, a one-line change stays one line, and collateral findings become tickets instead of silent scope creep.
+- **Anti-loop hypothesis discipline.** Probe before fix — a hypothesis without a confirming probe is rejected. Bounded retry with mandatory escalation, plus source-of-truth divergence checks before chasing a logic bug. Human observation outranks the agent's own hypothesis when the two disagree.
+- **Hybrid LLM routing.** Reasoning-heavy roles run on the high tier (Opus); high-volume grunt work is delegated to a secondary worker provider through thin `Task → Bash → Python` wrappers — a pragmatic split the runtime doesn't natively support.
 
 ## How it fits together
 
@@ -12,7 +24,7 @@ The architecture is deliberately **root-driven**: a single main thread ("root") 
 - **Skills** (`agent_templates/skills/**`) preload domain knowledge into specific agents via the `skills:` frontmatter field, scoped per domain (`*-uefn`, `*-unreal`, `*-blender`).
 - **Hooks** (`hooks/*.ps1`):
   - `SessionStart` — regenerates `.claude/agents/` and `.claude/skills/` from templates, substituting `{{paths.*}}` placeholders (UTF-8 **without BOM**).
-  - `PreToolUse` — protected-file guard, root-scope advisory, KB advisory, plan-ownership hard-block, and Task-invocation capture.
+  - `PreToolUse` — protected-file guard, scope-territory hard-block (`agent_type`-aware, with a one-shot override), KB advisory, and Task-invocation capture.
   - `Stop` — reactive, non-blocking checks (curator pending, auditor pending, skills token-tax capture). Always exit 0.
 - **Python wrappers** (`scripts/agents/*.py`) inherit from `_deepseek_wrapper_base.py`, emit a JSON envelope to stdout, and write a per-invocation audit file.
 

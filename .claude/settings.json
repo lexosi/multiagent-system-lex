@@ -147,20 +147,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-root-scope-advisory.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-block-scope-territory.ps1\"",
             "timeout": 10,
-            "statusMessage": "Root scope advisory check..."
-          }
-        ]
-      },
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-block-plan-md-non-planner.ps1\"",
-            "timeout": 10,
-            "statusMessage": "RC1 plan.md non-planner block check..."
+            "statusMessage": "Scope-territory hard-block check..."
           }
         ]
       },
