@@ -1,0 +1,7 @@
+{
+  "verse_consult": {
+    "match_path": [".verse", "Content/Verse/"],
+    "tools": ["Edit", "Write"],
+    "inject_tiers": ["tier_1_always"]
+  }
+}

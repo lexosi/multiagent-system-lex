@@ -1,0 +1,62 @@
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# Python virtual env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Hook state files (runtime)
+.placeholders_state.json
+.curator_pending
+
+# Hook debug logs
+hooks/.debug.log
+hooks/*.log
+
+# Backups encoding/setup
+*.bak
+*.bak.*
+*.bak-*
+*.backup
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Settings local (paths user-specific)
+.claude/settings.local.json
+
+# Secret defense-in-depth (added 2026-05-27 pre-GitHub push)
+*.key
+*.pem
+*.p12
+*.pfx
+credentials*
+secrets*
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+*.pkcs8
+
+# Metrics runtime (skills token tax — Fase 5 MVP)
+.metrics/
+
+# Internal operational logs — excluded from public repo (2026-06-01)
+docs/agent_runs/
+
+hooks/.debug.log*
+
+# Runtime path config (use paths.example.json as template)
+config/paths.json

@@ -1,0 +1,182 @@
+{
+  "planner-uefn": [
+    "Content/Verse/Core",
+    "4 weak_maps × 128KB max por isla",
+    "Push Changes UEFN",
+    "Registry.Register[UID, Def]",
+    "PopulatePlacedEntity",
+    "ReadExtraPersistentData",
+    "MaybeBase B4",
+    "TEST-GATE Lexosi UEFN manual"
+  ],
+  "planner-unreal": [
+    "unreal.EditorAssetLibrary",
+    "GLTFImportFactory",
+    "MaterialEditingLibrary",
+    "scan_paths_synchronous",
+    "Texture2D collision en ruta SK canonica",
+    "redirector propagation",
+    "AssetRegistry in-memory",
+    "EAL.rename_asset"
+  ],
+  "planner-blender": [
+    "bpy.context.temp_override",
+    "--background --python",
+    "process_blend.py",
+    "bmesh.from_edit_mesh",
+    "FROZEN_SET = frozenset",
+    "action.fcurves deprecated",
+    "Cycles bake",
+    "<projects_root>\\ExampleBlenderProject"
+  ],
+  "reviewer-uefn": [
+    "Logger.LogX NO en <transacts>",
+    "err 3512 silent",
+    "Schema bump",
+    "Content/Verse/Core/*",
+    "Registry.Register[UID, Def]",
+    "ReadExtraPersistentData",
+    "vector3 annotation explicita → err 3588",
+    "Quotient[float, float] post-rotation"
+  ],
+  "reviewer-unreal": [
+    "EAL.rename_asset defensive pattern",
+    "isinstance(existing, unreal.Texture2D)",
+    "save_asset sin verify disk file",
+    "scan_paths_synchronous",
+    "Threshold multi-tex",
+    "Cube_*_root delete false",
+    "_count_unique_diffuse_textures",
+    "fortnite_ue.* (UEFN runtime"
+  ],
+  "reviewer-blender": [
+    "bpy.ops.wm.window_close",
+    "bpy.ops.render.opengl",
+    "bpy.context.view_layer.objects.active",
+    "action.slots → layers → strips → channelbag(slot).fcurves",
+    "neutralize_broken_image_nodes",
+    "float_buffer=False",
+    "magenta visual fail",
+    "filter_animations_v4"
+  ],
+  "coherence-auditor-uefn": [
+    "HUD success pero functional fail",
+    "MaybeBase derivation gotcha",
+    "placed_component item",
+    "Scale scaled-entity",
+    "ghost entries",
+    "Push Changes UEFN",
+    "weak_map state vs UI display",
+    "evidencia DINAMICA vs ESTATICA"
+  ],
+  "coherence-auditor-unreal": [
+    "Ghost AssetRegistry entry",
+    "EAL.does_asset_exist(path) == True",
+    "os.path.isfile(disk_path)",
+    "MaterialEditingLibrary.recompile_material",
+    "redirector chain stale",
+    "fixup_referencers",
+    "Texture2D collision masquerading",
+    "scan_paths_synchronous"
+  ],
+  "coherence-auditor-blender": [
+    "obj.data raw vs evaluated mesh",
+    "obj.evaluated_get(depsgraph).data",
+    "depsgraph.update()",
+    "image.has_data == False",
+    "neutralize_broken_image_nodes",
+    "MESH-bound vs OBJECT-bound actions",
+    "filter_animations_v4",
+    "Y-axis paste vs UV remap"
+  ],
+  "hypothesis-reasoning-uefn": [
+    "weak_map iteration crash",
+    "TD-021 NO cubierto",
+    "DIANA 5-step discriminator",
+    "Translation/UID/hash",
+    "Quotient[float, float] sobre valores post-Rotation.UnrotateVector",
+    "epsilon + 1.0 pre-Quotient",
+    "Push Changes UEFN",
+    "Helper :void NO encapsula <localizes>"
+  ],
+  "hypothesis-reasoning-unreal": [
+    "Class C1: GC collect mid-script",
+    "Class C2: Async load race",
+    "Class C3: Transient package leak",
+    "Class C4: Redirector loop",
+    "Class C5: Plugin reload state",
+    "Class C6: AssetRegistry stale",
+    "wait_for_completion()",
+    "importlib.reload"
+  ],
+  "hypothesis-reasoning-blender": [
+    "Context override missing",
+    "GUI-only op headless crash",
+    "Depsgraph stale state",
+    "MESH-bound action structural duplicates",
+    "Action API DEPRECATED",
+    "inspect_mesh_bound_actions.py",
+    "Cycles bake solo ACTIVE slot",
+    "frozenset({...}) manual list"
+  ],
+  "knowledge-curator-uefn": [
+    "AUTO-CURATED:START",
+    "AUTO-CURATED:END",
+    "Phrasing literal (NO paraphrase)",
+    "MEMORY.md verse-uefn",
+    "Criticidad declarada en postmortem",
+    "Archive policy",
+    "MEMORY_archive_YYYY-MM.md",
+    "TEST-GATE PASS date"
+  ],
+  "knowledge-curator-unreal": [
+    "F:\\knowledge\\unreal-python-editor\\MEMORY.md",
+    "AssetRegistry/Asset state inconsistencies",
+    "[UE 5.4] tag",
+    "Pending migration desde verse-uefn",
+    "MaterialEditingLibrary",
+    "AssetToolsHelpers",
+    "EditorAssetSubsystem",
+    "AssetRegistryHelpers"
+  ],
+  "knowledge-curator-blender": [
+    "F:\\SteamLibrary\\steamapps\\common\\Blender\\blender.exe",
+    "[Blender 5.1.2]",
+    "Manual list frozenset",
+    "Y-axis convention coherence paste/UV",
+    "Atlas paint pure-math supera Cycles bake",
+    "MESH-bound actions structural drops",
+    "action.fcurves DEPRECATED",
+    "uint8 RGBA BaseColor"
+  ],
+  "implementer-uefn": [
+    "event(t){} literal top-level",
+    "if (not X[]) rollback <transacts>",
+    "return/fail keywords NO existen en <decides>",
+    "set weak_map[K] = V",
+    "log_channel",
+    "creative_device",
+    "vErr:S26",
+    "Quotient[float, float] post-rotation"
+  ],
+  "implementer-unreal": [
+    "unreal.EditorAssetLibrary",
+    "EAL.rename_asset",
+    "EAL.delete_asset",
+    "GLTFImportFactory",
+    "isinstance(existing, unreal.Texture2D)",
+    "scan_paths_synchronous",
+    "_count_unique_diffuse_textures",
+    "MaterialEditingLibrary"
+  ],
+  "implementer-blender": [
+    "bpy.context.temp_override",
+    "bpy.data.images.new",
+    "float_buffer=False",
+    "action.slots if hasattr(slot, 'layers')",
+    "channelbag(slot)",
+    "bmesh.from_edit_mesh",
+    "neutralize_broken_image_nodes",
+    "FLY_EXAMPLEASSETS_OVERRIDE"
+  ]
+}

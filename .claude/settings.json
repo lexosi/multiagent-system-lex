@@ -1,0 +1,180 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/session-start-substitute-paths.ps1\"",
+            "timeout": 60,
+            "statusMessage": "Resolving multiagent placeholders..."
+          }
+        ]
+      },
+      {
+        "matcher": "resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/session-start-substitute-paths.ps1\"",
+            "timeout": 60,
+            "statusMessage": "Resolving multiagent placeholders..."
+          }
+        ]
+      },
+      {
+        "matcher": "clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/session-start-substitute-paths.ps1\"",
+            "timeout": 60,
+            "statusMessage": "Resolving multiagent placeholders..."
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/session-start-substitute-paths.ps1\"",
+            "timeout": 60,
+            "statusMessage": "Resolving multiagent placeholders..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/userpromptsubmit-visibility-reminder.ps1\"",
+            "timeout": 5,
+            "statusMessage": "Visibility reminder..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/stop-knowledge-curator.ps1\"",
+            "timeout": 30,
+            "statusMessage": "Scanning AR for curator pending..."
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/stop-no-auditor.ps1\"",
+            "timeout": 30,
+            "statusMessage": "Scanning AR for auditor pending..."
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/stop-capture-skills-token-tax.ps1\"",
+            "timeout": 30,
+            "statusMessage": "Capturing skills token tax..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-guard-protected-files.ps1\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-guard-protected-files.ps1\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-guard-protected-files.ps1\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-guard-protected-files.ps1\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-verse-kb-advisory.ps1\"",
+            "timeout": 10,
+            "statusMessage": "Verse KB advisory check..."
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-root-scope-advisory.ps1\"",
+            "timeout": 10,
+            "statusMessage": "Root scope advisory check..."
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-block-plan-md-non-planner.ps1\"",
+            "timeout": 10,
+            "statusMessage": "RC1 plan.md non-planner block check..."
+          }
+        ]
+      },
+      {
+        "matcher": "Agent|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-capture-task-invocation.ps1\"",
+            "timeout": 10,
+            "statusMessage": "Capturing task invocation (Fase 5.1)..."
+          }
+        ]
+      }
+    ]
+  }
+}

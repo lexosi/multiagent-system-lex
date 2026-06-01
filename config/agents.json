@@ -1,0 +1,168 @@
+{
+  "agents": {
+    "planner": {
+      "type": "claude_md",
+      "tier": "high",
+      "enabled": true,
+      "params": {}
+    },
+    "implementer": {
+      "type": "claude_md",
+      "tier": "high",
+      "enabled": true,
+      "params": {}
+    },
+    "reviewer": {
+      "type": "claude_md",
+      "tier": "high",
+      "enabled": true,
+      "params": {}
+    },
+    "specialist-verse": {
+      "type": "claude_md",
+      "tier": "high",
+      "enabled": true,
+      "params": {}
+    },
+    "specialist-unreal": {
+      "type": "claude_md",
+      "tier": "high",
+      "enabled": true,
+      "params": {}
+    },
+    "specialist-blender": {
+      "type": "claude_md",
+      "tier": "high",
+      "enabled": true,
+      "params": {}
+    },
+    "knowledge-curator": {
+      "type": "claude_md",
+      "tier": "high",
+      "enabled": true,
+      "params": {}
+    },
+    "coherence-auditor": {
+      "type": "claude_md",
+      "tier": "high",
+      "enabled": true,
+      "params": {}
+    },
+    "hypothesis-reasoning": {
+      "type": "claude_md",
+      "tier": "high",
+      "enabled": true,
+      "params": {}
+    },
+    "root-discipline-auditor": {
+      "type": "claude_md",
+      "tier": "high",
+      "enabled": true,
+      "params": {}
+    },
+    "doc_writer": {
+      "type": "deepseek_wrapper",
+      "tier": "low",
+      "enabled": true,
+      "params": {
+        "max_output_tokens": 65536,
+        "max_input_bytes": 512000,
+        "smoke": {
+          "task_id": "AR_smoke_doc_writer_001",
+          "doc_type": "postmortem",
+          "max_tokens": 4000,
+          "model": "deepseek-v4-flash",
+          "force": true
+        }
+      }
+    },
+    "tech_debt_scanner": {
+      "type": "deepseek_wrapper",
+      "tier": "low",
+      "enabled": true,
+      "params": {
+        "max_output_tokens": 65536,
+        "max_file_bytes": 102400,
+        "min_description_chars": 30,
+        "estimated_cost_per_file_usd": 0.005,
+        "default_temperature": 0.2,
+        "code_exts": [".py", ".verse", ".rs", ".ts", ".tsx", ".js", ".jsx", ".java", ".go", ".c", ".cpp", ".h", ".hpp"],
+        "docs_exts": [".md"],
+        "smoke": {
+          "task_id": "AR_smoke_techdebt_001",
+          "scan_mode": "docs",
+          "severity_threshold": "medium",
+          "max_findings": 5,
+          "max_files": 50,
+          "model": "deepseek-v4-flash"
+        }
+      }
+    },
+    "model_allocator": {
+      "type": "deepseek_wrapper",
+      "tier": "low",
+      "enabled": true,
+      "params": {
+        "max_output_tokens": 65536,
+        "cadence_hours_default": 72.0,
+        "promo_expiry_iso": "2026-05-31",
+        "smoke": {
+          "task_id": "AR_smoke_model_allocator_001",
+          "cadence_hours": 1.0,
+          "force": true,
+          "max_tokens": 4000,
+          "model": "deepseek-v4-flash"
+        }
+      }
+    },
+    "tester": {
+      "type": "deepseek_wrapper",
+      "tier": "low",
+      "enabled": true,
+      "params": {
+        "max_output_tokens": 65536,
+        "max_log_bytes": 204800,
+        "test_command_timeout_seconds": 300,
+        "test_verdicts": ["PASS", "FAIL", "NOT_EXECUTABLE", "INCONCLUSIVE"],
+        "smoke": {
+          "task_id": "AR_smoke_tester_001",
+          "expected_outcome": "All tests pass with exit code 0",
+          "max_tokens": 1500,
+          "model": "deepseek-v4-flash",
+          "log_text_dummy": "[2026-05-18 12:00:01] Starting test...\n[2026-05-18 12:00:02] Assertion passed: expected_value == actual_value\n[2026-05-18 12:00:03] All 5 tests passed.\n[2026-05-18 12:00:03] EXIT 0\n"
+        }
+      }
+    },
+    "researcher": {
+      "type": "deepseek_wrapper",
+      "tier": "medium",
+      "enabled": true,
+      "params": {
+        "max_output_tokens": 65536,
+        "max_context_bytes": 512000,
+        "smoke": {
+          "task_id": "AR_smoke_test_001",
+          "query": "¿qué dice la doc sobre option-version pattern?",
+          "max_tokens": 1500,
+          "model": "deepseek-v4-flash",
+          "context_file_resolver": {
+            "domain": "verse-uefn",
+            "relative_path": "docs/template_PERSISTENCE_MAP.md"
+          }
+        }
+      }
+    },
+    "hypothesis_tracker": {
+      "type": "deepseek_wrapper_storage",
+      "tier": null,
+      "enabled": true,
+      "params": {
+        "max_attempts_per_hypothesis": 3,
+        "anti_fp_cascade_threshold": 2,
+        "min_class_jump_rationale_chars": 30,
+        "actions": ["init", "add", "update", "falsify", "list", "class-jump"],
+        "sections": ["Open", "Testing", "Confirmed", "Falsified", "Blocked"]
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "tiers": {
+    "high": "claude-opus-4.8",
+    "medium": "deepseek-v4-pro",
+    "low": "deepseek-v4-flash"
+  }
+}

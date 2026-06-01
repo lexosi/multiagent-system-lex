@@ -1,0 +1,14 @@
+{
+  "knowledge_base": "<absolute path to your knowledge base, e.g. C:\\dev\\knowledge>",
+  "multiagent_root": "<absolute path to multiagent-system, e.g. C:\\dev\\multiagent-system>",
+  "uefn_projects_root": "<absolute path to your UEFN projects parent folder>",
+  "uefn_output_log": "%LOCALAPPDATA%\\FortniteGame\\Saved\\Logs",
+  "domains": {
+    "verse-uefn": "<knowledge_base>\\verse-uefn",
+    "python": "<knowledge_base>\\python",
+    "rust": "<knowledge_base>\\rust",
+    "java": "<knowledge_base>\\java",
+    "typescript-bun": "<knowledge_base>\\typescript-bun",
+    "cross-language": "<knowledge_base>\\cross-language"
+  }
+}

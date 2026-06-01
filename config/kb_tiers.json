@@ -1,0 +1,36 @@
+{
+  "domains": {
+    "verse-uefn": {
+      "tier_1_always": [
+        "VERSE_SYNTAX_GUIDE.md",
+        "verse-domain-rules.md",
+        "KB_GAPS.md"
+      ],
+      "tier_2_bug_fix": [
+        "postmortem_*.md",
+        "MEMORY.md",
+        "persistence_audit.md",
+        "EMERGENCY_ROLLBACK.md"
+      ],
+      "tier_3_project_init": [
+        "template_*.md",
+        "CLAUDE_reference_*.md",
+        "GLOSSARY.md"
+      ]
+    },
+    "unreal-python-editor": {
+      "tier_1_always": [
+        "MEMORY.md"
+      ],
+      "tier_2_bug_fix": [],
+      "tier_3_project_init": []
+    },
+    "blender-python": {
+      "tier_1_always": [
+        "MEMORY.md"
+      ],
+      "tier_2_bug_fix": [],
+      "tier_3_project_init": []
+    }
+  }
+}
