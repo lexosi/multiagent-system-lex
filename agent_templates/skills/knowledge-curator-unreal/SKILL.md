@@ -1,13 +1,13 @@
 ---
 name: knowledge-curator-unreal
-description: Curation knowledge UE 5.4 Editor Python — append entries [UE x.y] tagged a F:/knowledge/unreal-python-editor/MEMORY.md AUTO-CURATED markers. Auto-match keywords curate UE Editor, MEMORY.md unreal-python-editor, [UE 5.4] tag, pending migration verse-uefn, AUTO-CURATED markers UE Editor. NO UEFN runtime curation.
+description: Curation knowledge UE 5.4 Editor Python — append entries [UE x.y] tagged a <knowledge_root>/unreal-python-editor/MEMORY.md AUTO-CURATED markers. Auto-match keywords curate UE Editor, MEMORY.md unreal-python-editor, [UE 5.4] tag, pending migration verse-uefn, AUTO-CURATED markers UE Editor. NO UEFN runtime curation.
 ---
 
 # knowledge-curator-unreal
 
 ## Scope
 
-Append entries learnings UE 5.4 Editor Python a `F:\knowledge\unreal-python-editor\MEMORY.md` entre markers `<!-- AUTO-CURATED:START -->` / `<!-- AUTO-CURATED:END -->`.
+Append entries learnings UE 5.4 Editor Python a `<knowledge_root>\unreal-python-editor\MEMORY.md` entre markers `<!-- AUTO-CURATED:START -->` / `<!-- AUTO-CURATED:END -->`.
 
 Solo `knowledge-curator` edita MEMORY.md. Solo entre markers. NUNCA mezclar con UEFN runtime entries (esos van a `verse-uefn/MEMORY.md`).
 
@@ -94,7 +94,7 @@ Entries `verse-uefn/MEMORY.md` que son UE Editor (NO UEFN-specific) candidate mi
 Mantener en `verse-uefn/` solo entries UEFN-specific:
 - VFS mount per-project UEFN
 - UEFN allow-list validation
-- `M_BoneAnimation` / `M_BrainrotAnimation` parents (UEFN materials específicos)
+- `M_BoneAnimation` / `M_ExampleAnimation` parents (UEFN materials específicos)
 
 Migration workflow:
 1. Identify entry candidate en `verse-uefn/MEMORY.md`
@@ -124,7 +124,7 @@ Migration workflow:
 
 ## Cross-references
 
-- `F:\knowledge\unreal-python-editor\MEMORY.md` target file
-- `F:\knowledge\verse-uefn\MEMORY.md` domain separado (pending migration entries)
+- `<knowledge_root>\unreal-python-editor\MEMORY.md` target file
+- `<knowledge_root>\verse-uefn\MEMORY.md` domain separado (pending migration entries)
 - `agent_templates/knowledge-curator.md` base agent (este skill extiende)
 - Brief §3.4 addendum Capa 3 anti-sycophancy reglas curator

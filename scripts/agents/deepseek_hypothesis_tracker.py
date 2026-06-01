@@ -30,7 +30,7 @@ CLI:
     --status STATUS              (required para update) — open|testing|confirmed|falsified|blocked
     --from-hyp H<N>              (required para class-jump) — hipótesis origen que se class-jumpea
     --rationale TEXT             (required para class-jump) — ≥30 chars, persistido en doc
-    --premise-rechecked          (override anti-FP-cascade — requires Lexosi explícito)
+    --premise-rechecked          (override anti-FP-cascade — requires <user> explícito)
     --hypotheses-file PATH       (optional) — default: <root>/docs/agent_runs/<task_id>/hypotheses.md
     --smoke-test                 — secuencia canónica de 7 pasos
 
@@ -54,7 +54,7 @@ from _deepseek_wrapper_base import WrapperBase, MULTIAGENT_ROOT, get_agent_param
 from _common_regex import TASK_ID_RE, ATTEMPTS_LOG_RE  # noqa: E402
 
 
-# Module-level params load (fail-loud at import per B3.0 Lexosi decision #5).
+# Module-level params load (fail-loud at import per B3.0 <user> decision #5).
 # hypothesis_tracker is storage-only (tier=null) — no model resolution.
 _AGENT_PARAMS = get_agent_params("hypothesis_tracker")
 HYP_ID_RE = re.compile(r"^H[1-9][0-9]*$")
@@ -405,8 +405,8 @@ class DeepSeekHypothesisTracker(WrapperBase):
                     "threshold": ANTI_FP_CASCADE_THRESHOLD,
                     "required_actions": [
                         "(a) Re-ejecutar [PREMISE-CHECK]: ¿síntoma sigue reproducible? ¿build deployado? ¿mecánica intencional vs bug?",
-                        "(b) Preguntar a Lexosi verbatim: 'H<X>+H<Y> falsificadas. ¿Confirmas que el síntoma original sigue ocurriendo? ¿Has cambiado algo entre repros?'",
-                        "(c) Override solo con --premise-rechecked y autorización explícita Lexosi.",
+                        "(b) Preguntar a <user> verbatim: 'H<X>+H<Y> falsificadas. ¿Confirmas que el síntoma original sigue ocurriendo? ¿Has cambiado algo entre repros?'",
+                        "(c) Override solo con --premise-rechecked y autorización explícita <user>.",
                     ],
                 },
                 error=f"anti-FP-cascade triggered (falsified={falsified_count}, threshold={ANTI_FP_CASCADE_THRESHOLD})",
@@ -415,7 +415,7 @@ class DeepSeekHypothesisTracker(WrapperBase):
         if self.args.premise_rechecked and falsified_count >= ANTI_FP_CASCADE_THRESHOLD:
             warnings.append(
                 f"anti-FP-cascade OVERRIDE: --premise-rechecked usado con {falsified_count} hipótesis falsified. "
-                f"Lexosi authorization implícita."
+                f"<user> authorization implícita."
             )
 
         # Build llm_data_stub for hypothesis-reasoning Claude .md agent (duplicate_check mode).
@@ -502,7 +502,7 @@ class DeepSeekHypothesisTracker(WrapperBase):
                         "max_attempts": MAX_ATTEMPTS_PER_HYPOTHESIS,
                         "required_actions": [
                             f"(a) Falsify {self.args.hypothesis_id} con probe específico (action=falsify).",
-                            f"(b) Escalar a Lexosi con class-jump rationale verbatim.",
+                            f"(b) Escalar a <user> con class-jump rationale verbatim.",
                             f"(c) Reformular como nueva hipótesis en capa de abstracción distinta "
                             f"(action=class-jump --from-hyp {self.args.hypothesis_id} --rationale '...' --hypothesis-text '...').",
                         ],
@@ -794,7 +794,7 @@ def _smoke_test() -> None:
         ["--task-id", task_id, "--action", "list"],
     ]
     # Note: 6 sub-invocations (init + 2 add + update + falsify + list).
-    # Lexosi spec listó 7 con cleanup; cleanup es no-op (queremos retain file para review).
+    # <user> spec listó 7 con cleanup; cleanup es no-op (queremos retain file para review).
 
     print("[SMOKE] starting 6-step sequence", file=sys.stderr)
     step_summaries = []
@@ -875,7 +875,7 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--from-hyp", help="for class-jump: source hypothesis H<N> being class-jumped")
     p.add_argument("--rationale", help=f"for class-jump: explanation (≥{MIN_CLASS_JUMP_RATIONALE_CHARS} chars) of abstraction layer change")
     p.add_argument("--premise-rechecked", action="store_true",
-                   help="override anti-FP-cascade block (add). Requires Lexosi explicit authorization.")
+                   help="override anti-FP-cascade block (add). Requires <user> explicit authorization.")
     args = p.parse_args()
     if not args.smoke_test:
         if not args.action:

@@ -134,5 +134,5 @@ Brief §4.4 atomic = 1 file/step. Aplica igual UE Editor Python:
 
 ## Archivos protegidos
 
-- `<Project>/Content/Code/*.py` ASK Lexosi antes editar (proyectos UE 5.4 Lexosi en `<unreal_projects_root>\*` y `<uefn_root>\*`)
+- `<Project>/Content/Code/*.py` ASK <user> antes editar (proyectos UE 5.4 <user> en `<unreal_projects_root>\*` y `<uefn_root>\*`)
 - NO usar git para `<uefn_root>\*` (save = Push Changes Editor interno UEFN); `<unreal_projects_root>` también workflow Editor-driven

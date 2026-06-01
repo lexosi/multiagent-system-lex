@@ -4,7 +4,7 @@
     sustituyendo placeholders {{paths.X.Y}} con valores de paths.json.
 
 .DESCRIPTION
-    Lee templates desde F:\multiagent-system\agent_templates\*.md (source-of-truth
+    Lee templates desde <repo_root>\agent_templates\*.md (source-of-truth
     versionable). Sustituye placeholders {{paths.X.Y}} usando paths.json.
     Escribe resultado a $env:USERPROFILE\.claude\agents\*.md (runtime, leido por
     Claude Code).
@@ -16,9 +16,9 @@
     Tambien sustituye {{model}} en frontmatter via agents.json[<name>].tier ->
     models.json.tiers[<tier>] -> model value. Normaliza claude-opus-* -> "opus"
     (CC frontmatter short name). Loud failure si claude_md + tier resuelve a
-    deepseek-* (Lexosi-enforced: claude_md SIEMPRE tier=high+opus).
+    deepseek-* (<user>-enforced: claude_md SIEMPRE tier=high+opus).
 
-    Tambien lee F:\multiagent-system\.curator_pending (escrito por Hook 2 Stop)
+    Tambien lee <repo_root>\.curator_pending (escrito por Hook 2 Stop)
     y, si existe, inyecta additionalContext informando al root.
 
 .NOTES
@@ -53,7 +53,7 @@ $ErrorActionPreference = "Stop"
 $PathsJson = if ($env:MULTIAGENT_PATHS_CONFIG -and (Test-Path -LiteralPath $env:MULTIAGENT_PATHS_CONFIG)) {
     $env:MULTIAGENT_PATHS_CONFIG
 } else {
-    "F:\multiagent-system\config\paths.json"  # default PROD fallback
+    "<repo_root>\config\paths.json"  # default PROD fallback
 }
 
 # Derive repo root from paths.json location (paths.json lives at $RepoRoot\config\paths.json)
@@ -277,7 +277,7 @@ if (-not $skipRegen) {
     # Resolve-ModelPlaceholder: sustituye {{model}} en template content via
     # agents.json[<name>].tier -> models.json.tiers[<tier>] -> model value.
     # Normaliza claude-opus-* -> "opus" (CC short name compat frontmatter).
-    # Error loud si claude_md + tier resuelve a deepseek-* (contradicción Lexosi-enforced).
+    # Error loud si claude_md + tier resuelve a deepseek-* (contradicción <user>-enforced).
     # Si name/tier/model missing -> warning + leave placeholder intact (visible next session).
     function Resolve-ModelPlaceholder {
         param(
@@ -336,7 +336,7 @@ if (-not $skipRegen) {
         # Contradiction check: claude_md + deepseek-* = invariant violation.
         $agentType = $agentEntry.type
         if ($agentType -eq "claude_md" -and $modelValue -match '^deepseek-') {
-            $errMsg = "${TemplateName}: CONTRADICTION agent '$agentName' is claude_md but tier '$tier' resolves to '$modelValue' (DeepSeek). Lexosi-enforced: claude_md SIEMPRE tier=high+opus."
+            $errMsg = "${TemplateName}: CONTRADICTION agent '$agentName' is claude_md but tier '$tier' resolves to '$modelValue' (DeepSeek). <user>-enforced: claude_md SIEMPRE tier=high+opus."
             Write-DebugLog "ERROR $errMsg"
             throw $errMsg
         }
@@ -586,7 +586,7 @@ try {
 #       ARs UEFN viejos que NO citan root absoluto en plan/final_report (FN de señal-2 sola:
 #       entity-mult-missing, entity-removable, scaled-entity-reward-rate).
 #   (2) plan.md/final_report.md cita ROOT de proyecto target absoluto
-#       (<uefn_root>\ | <projects_root>\ | F:\dev-projects\). Captura blender/unreal-py target.
+#       (<uefn_root>\ | <projects_root>\ | <dev_projects_root>\). Captura blender/unreal-py target.
 # NO substrings genéricos .verse/Content (prose-FP td-fase-5-1b), NO campo files_changed
 # (ausente 76/80 reports), NO git diff per-AR (cutover 05-29 bulk-recover rompe rango).
 # Resultado: 0 FP en 9 infra ARs + TP en entity/scaled-entity/blender/uefn/unreal target.

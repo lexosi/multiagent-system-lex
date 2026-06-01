@@ -38,7 +38,7 @@ except ImportError:
     APIError = APIConnectionError = RateLimitError = Exception
 
 
-# Module-level params load (fail-loud at import per B3.0 Lexosi decision #5).
+# Module-level params load (fail-loud at import per B3.0 <user> decision #5).
 _AGENT_PARAMS = get_agent_params("doc_writer")
 MAX_INPUT_BYTES = _AGENT_PARAMS.get("max_input_bytes", 500 * 1024)
 DOC_TYPES = ("postmortem", "daily-log", "tech-debt", "api-doc", "agent-run-final-report", "bugs-summary-append", "generic")
@@ -424,9 +424,9 @@ class DeepSeekDocWriter(WrapperBase):
 
 def _load_paths_for_smoke() -> dict:
     """Load paths.json for smoke test. Fail clearly if missing or malformed."""
-    paths_json = Path(r"F:\multiagent-system\config\paths.json")
+    paths_json = Path(r"<repo_root>\config\paths.json")
     if not paths_json.exists():
-        raise RuntimeError("smoke test needs F:\\multiagent-system\\config\\paths.json to exist")
+        raise RuntimeError("smoke test needs <repo_root>\\config\\paths.json to exist")
     with open(paths_json, encoding="utf-8") as f:
         return json.load(f)
 

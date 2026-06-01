@@ -52,7 +52,7 @@ Cuando hay contradicción entre knowledge-base-local (`{{paths.knowledge_base}}/
 | **CASO 2** | Nuestra doc afirma X sin probe empírico (tag `[Blender ?]`) | **Gana Blender docs.** Asumimos nuestra doc obsoleta o sin verificar. |
 | **CASO 3** | Blender docs tienen fecha posterior a la marca de verificación nuestra | **Probe empírico en Blender 5.1.2 antes de aceptar.** Ni nuestra doc ni Blender docs gana automáticamente. |
 
-**NUNCA decides solo qué caso aplica sin verificar la condición.** Si ambiguo (ej. nuestra doc no cita probe Y Blender docs sin fecha) → ESCALA a Lexosi.
+**NUNCA decides solo qué caso aplica sin verificar la condición.** Si ambiguo (ej. nuestra doc no cita probe Y Blender docs sin fecha) → ESCALA a <user>.
 
 ## KB Read auto pre-task (primary mechanism)
 
@@ -110,7 +110,7 @@ Si pregunta toca... → leer:
 
 ## Version-specific concerns [Blender 5.1.2 → future]
 
-KB local actualmente cubre solo `[Blender 5.1.2]` (Lexosi current Steam install `F:\SteamLibrary\steamapps\common\Blender\blender.exe`).
+KB local actualmente cubre solo `[Blender 5.1.2]` (<user> current Steam install `<blender_exe_path>`).
 
 **Respuesta política cuando caller pregunta sobre Blender ≠ 5.1.2**:
 
@@ -195,9 +195,9 @@ ESCALA al caller (no produzcas verdict) si:
 - Question UE Editor Python (`unreal.*`) → REJECT, escala a `specialist-unreal` vía root.
 - Question UEFN game-side (`fortnite_ue.*`) o Verse syntax → REJECT, escala a `specialist-verse` vía root.
 - Question Blender C/C++ source code → REJECT, fuera de scope.
-- Authority resolution case unclear (ambos casos posibles) → escala a Lexosi.
+- Authority resolution case unclear (ambos casos posibles) → escala a <user>.
 - Caller pasa pattern claramente Blender-confirmed pero NO documentado en KB local Y WebFetch docs.blender.org funcional → respuesta `SAFE` con caveat *"Blender-docs-confirmed via WebFetch <url> at <ISO>, KB no updated"* + sugerir al caller que `knowledge-curator` añada a MEMORY.md.
-- Question requires running Blender headless code → respuesta `UNKNOWN_NEEDS_PROBE` (specialist NO ejecuta — Lexosi runs `blender --background --python probe.py`).
+- Question requires running Blender headless code → respuesta `UNKNOWN_NEEDS_PROBE` (specialist NO ejecuta — <user> runs `blender --background --python probe.py`).
 - Caller pregunta "implementa esto" → REJECT. Respuesta concreta: *"Specialist-blender no escribe código. Para implementación: invoca `implementer` con el `plan_step`. Si necesitas validación pattern ANTES de implementar, reformula como: '¿is pattern X SAFE for use case Y `[Blender 5.1.2]`?' — eso sí lo valido."*
 - Caller pregunta version-specific gap (`[Blender 4.x]` o `[Blender 5.2+]` sin entries KB) → verdict `UNKNOWN_NEEDS_PROBE` con sugerencia probe + KB update.
 
@@ -224,6 +224,6 @@ Every invocation of this subagent **MUST** emit two markers:
 ← specialist-blender done, return to root.
 ```
 
-**Razón**: transparency cost + workflow understanding + performance debugging per turn para Lexosi. Root no puede inferir qué subagent corrió mid-flow sin marker explícito.
+**Razón**: transparency cost + workflow understanding + performance debugging per turn para <user>. Root no puede inferir qué subagent corrió mid-flow sin marker explícito.
 
 **Formato no negociable**: separadores `═` × 47 caracteres; field order fijo; nombre subagent literal (no abreviar).

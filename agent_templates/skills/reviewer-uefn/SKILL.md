@@ -24,7 +24,7 @@ Auto-match si diff implementer modifica `*.verse` O paths bajo `Content/Verse/`.
   - `Logger.LogX` NO en `<transacts>` (err 3512 silent).
   - `<localizes>` constructor NO en `<transacts>` body NI helper `:void` invocado desde `<transacts>` (AR_2026-05-22 — helper NO encapsula, effects propagan).
   - `set weak_map[K] = V` propaga `<decides>` → envuelto `if (set Map[K] = V) {}`.
-- [ ] **`Content/Verse/Core/*` modificado** → ASK Lexosi (singletons protected). Si diff incluye sin pre-aprobación → BLOCK.
+- [ ] **`Content/Verse/Core/*` modificado** → ASK <user> (singletons protected). Si diff incluye sin pre-aprobación → BLOCK.
 - [ ] **Registry pattern**: nuevo `item_definition` declarado MUST tener `Registry.Register[UID, Def]` en `inventory_loader.OnInitialized` (o equivalente init). Grep verificación obligatoria.
 - [ ] **Load path Type=N** (`ReadExtraPersistentData` o equivalente decoder) → cross-verify parity con live placement path (`PopulatePlacedEntity` o equivalente). Meta-pattern divergence recurrente.
 - [ ] **Loader fail path defensive**: decoder fail debe avanzar stream `DecodedData(0)+1` ints, NO fijo `+= 1` (coincidencia accidental con `additional=0` no es defensa robusta).
@@ -47,9 +47,9 @@ Si diff implementer cita pattern Verse:
 
 - **CASO 1**: KB local cita postmortem/test empírico/SPR → gana KB. Confirmar source citado.
 - **CASO 2**: KB local afirma sin probe → Epic gana (BROKEN runtime → escalar).
-- **CASO 3**: Epic posterior a verificación nuestra → probe empírico TEST-GATE Lexosi.
+- **CASO 3**: Epic posterior a verificación nuestra → probe empírico TEST-GATE <user>.
 
-**NUNCA decides solo qué caso aplica.** Ambiguo → escalar Lexosi.
+**NUNCA decides solo qué caso aplica.** Ambiguo → escalar <user>.
 
 ## Verdict levels
 

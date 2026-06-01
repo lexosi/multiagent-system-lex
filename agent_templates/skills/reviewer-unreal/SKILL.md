@@ -15,7 +15,7 @@ Validar diffs UE 5.4 Editor Python producidos por `implementer-unreal`. Enforcem
 
 - [ ] Cada gotcha/entry KB-bound en diff lleva tag `[UE x.y]` o `[UE x.y-z]` o `[UE ≥x.y]`
 - [ ] NO mezclar APIs UE 5.4 con UE ≥5.7 sin probe explícito documentado
-- [ ] Constraint Lexosi current = UE 5.4 (no aceptar `[UE ≥5.7]`-only sin justificación)
+- [ ] Constraint <user> current = UE 5.4 (no aceptar `[UE ≥5.7]`-only sin justificación)
 - [ ] Comments código referenciando APIs version-specific incluyen tag inline
 
 ### Asset paths
@@ -57,7 +57,7 @@ Validar diffs UE 5.4 Editor Python producidos por `implementer-unreal`. Enforcem
 
 - [ ] Whitelist baseline documentada (Material compile transient warnings, `Cube_*_root` delete false)
 - [ ] Grep FAIL separated log file
-- [ ] Reporte tabular Lexosi (tipo / count / sample line / decisión)
+- [ ] Reporte tabular <user> (tipo / count / sample line / decisión)
 - [ ] NO gastar ciclos investigando cosmetics whitelist confirmados
 
 ## Severity levels
@@ -84,4 +84,4 @@ Validar diffs UE 5.4 Editor Python producidos por `implementer-unreal`. Enforcem
 
 - `implementer-unreal/SKILL.md` G1-G4 gotchas concretos con código
 - `coherence-auditor-unreal/SKILL.md` source-of-truth divergence patterns
-- `F:\knowledge\unreal-python-editor\MEMORY.md` entries [UE 5.4] AUTO-CURATED
+- `<knowledge_root>\unreal-python-editor\MEMORY.md` entries [UE 5.4] AUTO-CURATED

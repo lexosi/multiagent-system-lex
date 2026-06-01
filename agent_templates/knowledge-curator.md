@@ -76,11 +76,11 @@ Para cada lección sobreviviente:
 ````
 
 4. Si MEMORY.md supera 200 líneas → **NO archivar automáticamente**. Escribir warning en `curator_report.md`:
-   > `WARNING: MEMORY.md <path> tiene <N> líneas (>200). Considera archivar entradas anteriores a YYYY-MM a MEMORY_archive_<YYYY-MM>.md. Curator NO ejecuta archive sin aprobación explícita de Lexosi.`
+   > `WARNING: MEMORY.md <path> tiene <N> líneas (>200). Considera archivar entradas anteriores a YYYY-MM a MEMORY_archive_<YYYY-MM>.md. Curator NO ejecuta archive sin aprobación explícita de <user>.`
 
 ## Hybrid 3-bucket model (B+ since 2026-05-17)
 
-Tras curar bucket 1 (`F:\knowledge\<domain>\MEMORY.md`), considerar también:
+Tras curar bucket 1 (`<knowledge_root>\<domain>\MEMORY.md`), considerar también:
 
 ### Bucket 2 — proyecto target
 
@@ -100,11 +100,11 @@ Cuando AR contiene lección sobre cómo los agentes performaron (no sobre el pro
 1. Triggers:
    - Sección "lecciones agéntica" en `final_report.md` o `postmortem*.md`.
    - Patrón de fallo en root/researcher/implementer/etc detectado en `root_audit_report.md`.
-   - Lexosi declara verbatim "esto es lección de cómo trabajan los agentes".
+   - <user> declara verbatim "esto es lección de cómo trabajan los agentes".
 2. Path bucket 3: `{{paths.domains.agent-system}}/MEMORY.md` (resolver runtime via `paths.json` `domains["agent-system"]`).
 3. Insertar entre markers `<!-- AUTO-CURATED:START/END -->` ya presentes.
 4. Sección target: `## Patterns` / `## Gotchas` / `## Recent learnings` según naturaleza.
-5. Phrasing literal del final_report (no relax). Pattern requiere ≥2 instancias O criticidad declarada por Lexosi.
+5. Phrasing literal del final_report (no relax). Pattern requiere ≥2 instancias O criticidad declarada por <user>.
 
 ### Anti-loop hybrid
 
@@ -121,7 +121,7 @@ Cuando AR contiene lección sobre cómo los agentes performaron (no sobre el pro
 4. **Si markers NO existen**:
    - **NO toques CLAUDE.md** (regla #4).
    - Escribe warning al `curator_report.md`:
-     > `WARNING: CLAUDE.md en <path> no tiene markers AUTO-CURATED. Sección de auto-curated skip. Lexosi: ejecutar /init reset para regenerar CLAUDE.md con markers, o añadir markers manualmente como excepción documentada.`
+     > `WARNING: CLAUDE.md en <path> no tiene markers AUTO-CURATED. Sección de auto-curated skip. <user>: ejecutar /init reset para regenerar CLAUDE.md con markers, o añadir markers manualmente como excepción documentada.`
    - Continúa con MEMORY.md (independiente).
 5. **Si markers existen**:
    - Reemplaza solo el contenido entre los markers con sección actualizada.
@@ -224,6 +224,6 @@ Every invocation of this subagent **MUST** emit two markers:
 ← knowledge-curator done, return to root.
 ```
 
-**Razón**: transparency cost + workflow understanding + performance debugging per turn para Lexosi. Root no puede inferir qué subagent corrió mid-flow sin marker explícito.
+**Razón**: transparency cost + workflow understanding + performance debugging per turn para <user>. Root no puede inferir qué subagent corrió mid-flow sin marker explícito.
 
 **Formato no negociable**: separadores `═` × 47 caracteres; field order fijo; nombre subagent literal (no abreviar).

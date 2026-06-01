@@ -43,7 +43,7 @@ Replace these placeholders / paths with your own locations:
 | `<uefn_root>` | Parent folder of your UEFN projects | hooks, `config/paths-schema.md`, UEFN skills |
 | `<projects_root>` | Parent folder of your Blender/asset projects | Blender skills |
 | `<unreal_projects_root>` | Parent folder of your Unreal Editor projects | Unreal skills |
-| `F:/multiagent-system/...` | Absolute path to **this** repo (used in hook commands) | `.claude/settings.json` |
+| `<repo_root>/...` | Absolute path to **this** repo (used in hook commands) | `.claude/settings.json` |
 | `config/paths.json` | Runtime path config — **create your own** from `config/paths.example.json` | (gitignored) |
 
 Folder-name tokens inside hook regexes (e.g. `UEFNProjects`) are generic examples — adjust them to match your real working directories. Per-machine overrides are supported via the `MULTIAGENT_PATHS_CONFIG` environment variable.

@@ -15,8 +15,8 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-DEFAULT_PATHS_JSON = Path("F:/multiagent-system/config/paths.json")
-FALLBACK_JSONL = Path("F:/multiagent-system/.metrics/skills_token_tax.jsonl")
+DEFAULT_PATHS_JSON = Path("<repo_root>/config/paths.json")
+FALLBACK_JSONL = Path("<repo_root>/.metrics/skills_token_tax.jsonl")
 
 
 def resolve_default_jsonl() -> Path:

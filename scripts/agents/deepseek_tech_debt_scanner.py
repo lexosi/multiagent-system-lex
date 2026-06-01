@@ -34,7 +34,7 @@ except ImportError:
     APIError = APIConnectionError = RateLimitError = Exception
 
 
-# Module-level params load (fail-loud at import per B3.0 Lexosi decision #5).
+# Module-level params load (fail-loud at import per B3.0 <user> decision #5).
 _AGENT_PARAMS = get_agent_params("tech_debt_scanner")
 SCAN_MODES = ("code", "docs", "mixed")
 SEVERITY_LEVELS = ("low", "medium", "high", "critical")
@@ -495,9 +495,9 @@ class DeepSeekTechDebtScanner(WrapperBase):
 # ---------- CLI plumbing ----------
 
 def _resolve_smoke_scan_path() -> str:
-    paths_json = Path(r"F:\multiagent-system\config\paths.json")
+    paths_json = Path(r"<repo_root>\config\paths.json")
     if not paths_json.exists():
-        raise RuntimeError("smoke test needs F:\\multiagent-system\\config\\paths.json")
+        raise RuntimeError("smoke test needs <repo_root>\\config\\paths.json")
     with open(paths_json, encoding="utf-8") as f:
         data = json.load(f)
     domain = data.get("domains", {}).get("verse-uefn")

@@ -38,7 +38,7 @@ Auto-match si `file_path` termina en `.verse` O contiene `Content/Verse/`. Overr
 
 - **KB local primary**: `{{paths.knowledge_base}}/verse-uefn/` (Tier 1 always Read PRE-edit).
 - **WebFetch Epic docs BROKEN runtime** (SPA JS-rendered, devuelve shell HTML sin contenido). Authority CASO 3 NO ejecutable hasta Epic fix SPA.
-- **Si KB local + specialist-verse devuelven UNKNOWN** → respuesta `UNKNOWN_NEEDS_PROBE` + escalar Lexosi TEST-GATE compilador real. NO inventar.
+- **Si KB local + specialist-verse devuelven UNKNOWN** → respuesta `UNKNOWN_NEEDS_PROBE` + escalar <user> TEST-GATE compilador real. NO inventar.
 
 ## Verse-specific anti-patterns críticos
 
@@ -67,7 +67,7 @@ Auto-match si `file_path` termina en `.verse` O contiene `Content/Verse/`. Overr
 
 ## Stop conditions Verse-specific
 
-- File path bajo `Content/Verse/Core/*Persistence*.verse` → REJECT, ASK Lexosi (hook bloquea).
+- File path bajo `Content/Verse/Core/*Persistence*.verse` → REJECT, ASK <user> (hook bloquea).
 - Schema bump weak_map no declarado en plan_step → REJECT, pide planner reformular.
 - `WebFetch dev.epicgames.com` falla runtime → NO autoritativo, escalar TEST-GATE.
 - Effects question zona TBD §7 → escalar specialist-verse, NO inventar.

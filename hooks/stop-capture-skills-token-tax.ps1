@@ -33,7 +33,7 @@ trap { exit 0 }
 $PathsJson = if ($env:MULTIAGENT_PATHS_CONFIG -and (Test-Path -LiteralPath $env:MULTIAGENT_PATHS_CONFIG)) {
     $env:MULTIAGENT_PATHS_CONFIG
 } else {
-    "F:\multiagent-system\config\paths.json"  # default PROD fallback
+    "<repo_root>\config\paths.json"  # default PROD fallback
 }
 $RepoRoot        = Split-Path -Parent (Split-Path -Parent $PathsJson)
 $AgentsDir       = Join-Path $RepoRoot ".claude\agents"

@@ -1,6 +1,6 @@
 > **⚠️ DEPRECATED — config-modular B3.0 (2026-05-20)**
 >
-> Source-of-truth ahora: `F:\multiagent-system\config\agents.json` + `F:\multiagent-system\config\models.json`
+> Source-of-truth ahora: `<repo_root>\config\agents.json` + `<repo_root>\config\models.json`
 >
 > Futuro: auto-generar este doc desde JSON (defer post-B6).
 >
@@ -13,7 +13,7 @@
 **AR origen**: `AR_2026-05-19_B1-modelos-por-tarea`
 **Date**: 2026-05-19
 **Parent rebuild**: B (6 ARs: B1→B6)
-**Scope**: argparse `--model` default por wrapper en `F:\multiagent-system\scripts\agents\deepseek_*.py`
+**Scope**: argparse `--model` default por wrapper en `<repo_root>\scripts\agents\deepseek_*.py`
 
 ---
 
@@ -47,7 +47,7 @@ Curated AR_2026-05-19 (`feedback_silent_failure_guard_wrappers.md` + entry CLAUD
 
 ### Target final `hypothesis_tracker` + `root_discipline_auditor` = **IMPLEMENTED B2 (2026-05-19)**
 
-**Resolución divergente per gap 4 Lexosi 2026-05-19**:
+**Resolución divergente per gap 4 <user> 2026-05-19**:
 
 - **`hypothesis_tracker` = HYBRID Opción C**: wrapper Python preserva storage rico (parse/serialize hypotheses.md + anti-loop counter + class-jump). Reasoning (`duplicate_check` + `falsify_eval`) migrado a `agent_templates/hypothesis-reasoning.md` Claude Opus. Wrapper Python NO llama DeepSeek post-refactor. Step 5+6 AR_2026-05-19_B2.
 - **`root_discipline_auditor` = FULL MIGRATION** (NO hybrid). Wrapper Python deleted (Step 9). Reasoning + storage = Claude `.md` agent `agent_templates/root-discipline-auditor.md` (Step 8). Razón: storage trivial no justifica wrapper Python; YAGNI shared base class confirmado.

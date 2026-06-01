@@ -5,9 +5,9 @@
 
 .DESCRIPTION
     Stop hook fires al fin de CADA turn — no hay evento "AR cerrado" nativo.
-    Heuristica: scan F:\multiagent-system\docs\agent_runs\AR_*\final_report.md,
+    Heuristica: scan <repo_root>\docs\agent_runs\AR_*\final_report.md,
     filtra mtime < 5min Y sin curator_report.md hermano, registra en
-    F:\multiagent-system\.curator_pending (JSON merge si ya existe).
+    <repo_root>\.curator_pending (JSON merge si ya existe).
 
     SessionStart proxima sesion lee .curator_pending y notifica al root
     via additionalContext. One-shot (consume y borra).
@@ -45,7 +45,7 @@ trap {
 $PathsJson = if ($env:MULTIAGENT_PATHS_CONFIG -and (Test-Path -LiteralPath $env:MULTIAGENT_PATHS_CONFIG)) {
     $env:MULTIAGENT_PATHS_CONFIG
 } else {
-    "F:\multiagent-system\config\paths.json"  # default PROD fallback
+    "<repo_root>\config\paths.json"  # default PROD fallback
 }
 
 $RepoRoot       = Split-Path -Parent (Split-Path -Parent $PathsJson)

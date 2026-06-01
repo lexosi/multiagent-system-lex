@@ -11,17 +11,17 @@ Auto-match si AR tickets mencionan: `verse`, `uefn`, `.verse files`, `Verse Pers
 
 ## Arquitectura típica UEFN
 
-- **Layout proyecto**: `Content/Verse/Core/*` (singletons protegidos, ASK Lexosi antes), `Content/Verse/Systems/*`, `Content/Verse/Devices/*`. Dependency layers (verse-domain-rules.md): Core no importa Systems, Devices nadie importa.
+- **Layout proyecto**: `Content/Verse/Core/*` (singletons protegidos, ASK <user> antes), `Content/Verse/Systems/*`, `Content/Verse/Devices/*`. Dependency layers (verse-domain-rules.md): Core no importa Systems, Devices nadie importa.
 - **Persistence módulo**: pattern `PersistenceLayer` + `<project>/docs/PERSISTENCE_MAP.md` (instanciado en proyecto, no template). Límite inviolable: **4 weak_maps × 128KB max por isla**.
 - **Módulos comunes**: Inventory, Economy, Persistence, Selectable, Placement, Spawn (item/scaled-entity spawning), Base (voxel grid).
 - **Codecs**: load paths Type=0 (live placement) vs Type=N (persistence rehydration) — pattern `CodecPlaceReference.AdditionalDecoder` para condicional por Type.
 
 ## Sprint/feature pattern Verse
 
-1. **Plan steps numerados ONE-FILE-PER-TURN** (Cap N4 STOP-GATE per-step Lexosi entre steps).
+1. **Plan steps numerados ONE-FILE-PER-TURN** (Cap N4 STOP-GATE per-step <user> entre steps).
 2. **Schema bump obligatorio** si plan toca weak_map type/struct existente (R1 verse-domain-rules.md). Migration pattern: option-version (`template_PERSISTENCE_MAP.md` §3 + §8). NO renombrar/eliminar weak_map publicado.
 3. **Registry pattern** para nuevo `item_definition`: declarar field NO equivale a registrarlo. MUST añadir `Registry.Register[<UID libre>, <Def>]` en `inventory_loader.OnInitialized` (o equivalente). Sin Register → UID=-1 → decoder failable → data perdido al reload.
-4. **TEST-GATE Lexosi UEFN manual obligatorio** post-implementation. Compile success ≠ deployed. Push Changes UEFN obligatorio antes de declarar fix activo.
+4. **TEST-GATE <user> UEFN manual obligatorio** post-implementation. Compile success ≠ deployed. Push Changes UEFN obligatorio antes de declarar fix activo.
 5. **Cross-type testing obligatorio** al modificar load paths (Type=0 live vs Type=1 item vs Type=2 scaled-entity). Meta-pattern recurrente: load path Type=N omite paso que sí ejecuta path Type=0.
 
 ## Paths canónicos
@@ -56,14 +56,14 @@ Auto-match si AR tickets mencionan: `verse`, `uefn`, `.verse files`, `Verse Pers
 - [ ] Steps numerados ONE-FILE-PER-TURN.
 - [ ] Cada step declara `target_lines` específico (no rangos vagos).
 - [ ] Schema bump documentado si weak_map type modificado.
-- [ ] Step final = "Push Changes UEFN + TEST-GATE Lexosi in-game".
+- [ ] Step final = "Push Changes UEFN + TEST-GATE <user> in-game".
 - [ ] Cross-type testing enumerado si load path tocado.
 
 ## Anti-patterns planning
 
-- **Skip TEST-GATE Lexosi**: declarar fix activo sin in-game verification.
+- **Skip TEST-GATE <user>**: declarar fix activo sin in-game verification.
 - **Asumir Push Changes = fix deployed sin verify build version**: build staleness silent.
 - **Plan sin Registry.Register para nuevo item_definition**: data perdido al reload silentemente.
 - **Uniformizar load path sin cross-type verify**: regresión visual silenciosa cross-Type (asimetría Entity.Scale vs Niagara scaled-entity).
-- **Tocar `Content/Verse/Core/*` sin ASK Lexosi**: singletons protegidos.
+- **Tocar `Content/Verse/Core/*` sin ASK <user>**: singletons protegidos.
 - **Plan tocar persistence Verse sin escalation explícita**: hook bloquea Edit/Write.

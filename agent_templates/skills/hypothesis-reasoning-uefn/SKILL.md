@@ -25,7 +25,7 @@ Auto-match si AR es bug-fix Verse con keywords: crash post-restart, weak_map ite
 ### 3. Spawn timing race (post-restart, post Push Changes)
 
 - **Síntoma**: component rehydration incomplete antes de consumer. Ejemplo: `spawn_controller.verse:108 GetComponent[placed_component]` fail silent post-restart porque `placeable_component.ReadExtraPersistentData` no ejecutó `Entity.AddComponents(placed_component)` que sí hace live `PopulatePlacedEntity`.
-- **Probe**: DIANA 5-step discriminators replicando `if:` cascade original con `Print` en cada step (success path + fail path), vars `_Probe` suffix para no shadow originales. 1 ciclo Lexosi resuelve sub-condición.
+- **Probe**: DIANA 5-step discriminators replicando `if:` cascade original con `Print` en cada step (success path + fail path), vars `_Probe` suffix para no shadow originales. 1 ciclo <user> resuelve sub-condición.
 
 ### 4. Persistence post-restart loss
 
@@ -56,12 +56,12 @@ Auto-match si AR es bug-fix Verse con keywords: crash post-restart, weak_map ite
 - **3 attempts max per hipótesis**. 4º → class-jump obligatorio.
 - **Probe antes de fix** (anti-loop regla #2). Excepción: evidencia ESTÁTICA verificable leyendo source code (presencia/ausencia líneas) → probe runtime redundante. Justificar explícito en hypothesis tracking.
 - **Probes con identity** (Translation/UID/hash) obligatorios si hipótesis involucra divergencia de instancia. State flags solos (Locked=true/false) producen interpretaciones erróneas. Validado AR_2026-05-17 lock-steal probes A1-A5 v2.
-- **Observación Lexosi > hipótesis del agente** (anti-loop regla #3), pero distinguir modo:
+- **Observación <user> > hipótesis del agente** (anti-loop regla #3), pero distinguir modo:
   - Evidencia → falsificar hipótesis + replanear.
   - Intuición → discutir + pedir test confirmatorio.
   - Ambiguo → pedir clarificación verbatim.
 - **Source-of-truth divergence check** antes de bug de lógica (anti-loop regla #4). Type=N vs Type=0, state vs UI, registry vs disk.
-- **Predicciones visuales** contrastadas con observación real (anti-loop regla #5). Validado AR_2026-05-18 placeable-spot — H_OVERFLOW falsificada por Lexosi "garbage es mecánica real, no fantasma".
+- **Predicciones visuales** contrastadas con observación real (anti-loop regla #5). Validado AR_2026-05-18 placeable-spot — H_OVERFLOW falsificada por <user> "garbage es mecánica real, no fantasma".
 
 ## Probe pattern Verse-specific
 
@@ -106,4 +106,4 @@ else:
 - Probe sin identity en divergencia de instancia.
 - Class-jump skipped post-3 attempts mismo class.
 - Inventar Verse semantics (mapa iteration / concurrent mutation) sin KB authoritative.
-- Ignorar observación empírica Lexosi por intuición agente.
+- Ignorar observación empírica <user> por intuición agente.

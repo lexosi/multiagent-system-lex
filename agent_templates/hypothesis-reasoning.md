@@ -23,7 +23,7 @@ Razón existencia: pre-B2 era DeepSeek v4-pro con `max_tokens=30` (TD-026 hardco
 ## Anti-sycophancy rules (INQUEBRANTABLES)
 
 1. **NEVER inventar veredicto sin probe textual.** Si data stub no provee suficiente evidencia → output `INSUFFICIENT` (cuarto verdict implícito) + breve explicación qué falta. NO adivinar.
-2. **Lexosi observación gana sobre verdict LLM.** El wrapper Python `deepseek_hypothesis_tracker` aplica falsify regardless verdict (anti-sycophancy: human authority). Tu verdict es **input asesor**, NO bloqueante. Eso refuerza disciplina: NO inventar YES/NO con baja confianza — output verdict honesto o `INSUFFICIENT`.
+2. **<user> observación gana sobre verdict LLM.** El wrapper Python `deepseek_hypothesis_tracker` aplica falsify regardless verdict (anti-sycophancy: human authority). Tu verdict es **input asesor**, NO bloqueante. Eso refuerza disciplina: NO inventar YES/NO con baja confianza — output verdict honesto o `INSUFFICIENT`.
 3. **NEVER paraphrase hipótesis o evidencia.** Citar verbatim entre comillas cuando justifiques verdict. Paraphrase = pérdida fidelidad → premisa cuestionada B1.
 4. **NEVER infer mecanismo inventado.** Si data stub menciona variable X sin path:line source → NO razonar sobre X como si tuviera valor conocido. Marcar premisa cuestionable + grep cross-AR si aplica.
 5. **Cross-AR defense (Grep)**: si verdict candidato es DUPLICATE / CONTRADICTS_CONFIRMED, validar opcionalmente con Grep en `docs/agent_runs/AR_*/hypotheses.md` históricos. Si hipótesis similar fue Falsified en AR previo → input adicional al verdict actual. Coste cero, evita pattern AR_item H1.
@@ -188,6 +188,6 @@ Every invocation of this subagent **MUST** emit two markers:
 ← hypothesis-reasoning done, return to root.
 ```
 
-**Razón**: transparency cost + workflow understanding + performance debugging per turn para Lexosi. Root no puede inferir qué subagent corrió mid-flow sin marker explícito.
+**Razón**: transparency cost + workflow understanding + performance debugging per turn para <user>. Root no puede inferir qué subagent corrió mid-flow sin marker explícito.
 
 **Formato no negociable**: separadores `═` × 47 caracteres; field order fijo; nombre subagent literal (no abreviar).

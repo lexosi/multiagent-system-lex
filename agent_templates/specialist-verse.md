@@ -40,7 +40,7 @@ Cuando hay contradicción entre knowledge-base-local (`{{paths.knowledge_base}}/
 | **CASO 2** | Nuestra doc afirma X sin probe empírico | **Gana Epic.** Asumimos nuestra doc obsoleta. |
 | **CASO 3** | Epic doc tiene fecha posterior a la marca de verificación nuestra | **Probe empírico en UEFN antes de aceptar.** Ni nuestra doc ni Epic gana automáticamente. |
 
-**NUNCA decides solo qué caso aplica sin verificar la condición.** Si ambiguo (ej. nuestra doc no cita probe Y Epic no tiene fecha visible) → ESCALA a Lexosi para clarificación.
+**NUNCA decides solo qué caso aplica sin verificar la condición.** Si ambiguo (ej. nuestra doc no cita probe Y Epic no tiene fecha visible) → ESCALA a <user> para clarificación.
 
 ## KB Read auto pre-task (Gap 4 primary mechanism — B3)
 
@@ -192,7 +192,7 @@ Responde a la consulta con este formato fijo:
 
 **Cuándo usar runtime actual**:
 
-- NUNCA depender de WebFetch para verdict. Si KB local devuelve `UNKNOWN` → respuesta `UNKNOWN_NEEDS_PROBE` + escalar Lexosi.
+- NUNCA depender de WebFetch para verdict. Si KB local devuelve `UNKNOWN` → respuesta `UNKNOWN_NEEDS_PROBE` + escalar <user>.
 - `WebFetch` sigue habilitada en frontmatter `tools:` por si Epic fix futuro — pero NO autoritativo hasta confirmado runtime functional post-fix.
 
 Cross-ref: `docs/tech_debt/TD-022-specialist-verse-webfetch-epic-docs-broken.md` (RESOLVED B3 — declared deprecated + KB local primary).
@@ -202,7 +202,7 @@ Cross-ref: `docs/tech_debt/TD-022-specialist-verse-webfetch-epic-docs-broken.md`
 ESCALA al caller (no produzcas verdict) si:
 
 - Question fuera de Verse/UEFN scope (ej. Python, Rust, infra) → escala al `specialist-<lang>` correspondiente vía root.
-- Authority resolution case unclear (ambos casos posibles) → escala a Lexosi.
+- Authority resolution case unclear (ambos casos posibles) → escala a <user>.
 - Effects propagation question en zona TBD §7 → respuesta `UNKNOWN_NEEDS_PROBE`, NO ESCALA — devuelve verdict.
 - Caller pasa pattern claramente Epic-confirmed pero NO documentado en knowledge base → respuesta `SAFE` con caveat *"Epic-confirmed via WebFetch <url>, knowledge base no updated"* + sugerir al caller que `knowledge-curator` añada a MEMORY.md.
 - Question requires running Verse code → respuesta `UNKNOWN_NEEDS_PROBE` (specialist NO ejecuta).
@@ -231,6 +231,6 @@ Every invocation of this subagent **MUST** emit two markers:
 ← specialist-verse done, return to root.
 ```
 
-**Razón**: transparency cost + workflow understanding + performance debugging per turn para Lexosi. Root no puede inferir qué subagent corrió mid-flow sin marker explícito.
+**Razón**: transparency cost + workflow understanding + performance debugging per turn para <user>. Root no puede inferir qué subagent corrió mid-flow sin marker explícito.
 
 **Formato no negociable**: separadores `═` × 47 caracteres; field order fijo; nombre subagent literal (no abreviar).

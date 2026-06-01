@@ -61,7 +61,7 @@ Auto-match diff/PR review tocando `.py` con imports `bpy`, `bmesh`, scripts `pro
 ### Batch heterogéneo
 
 - [ ] **Flag MEDIUM** si constante única (`OFFSET_Z`, `ELEVATION`) aplicada a batch heterogéneo geometry (bbox varying). Permitir override per-modelo (CSV/dict por name).
-- [ ] Manual list hardcoded `frozenset({...})` preferred sobre auto-detection heurística para `<10` modelos verbatim Lexosi disponible.
+- [ ] Manual list hardcoded `frozenset({...})` preferred sobre auto-detection heurística para `<10` modelos verbatim <user> disponible.
 
 ### glTF export coherence
 
@@ -95,5 +95,5 @@ Auto-match diff/PR review tocando `.py` con imports `bpy`, `bmesh`, scripts `pro
 ## Aprobación criteria
 
 - **Approve**: zero CRITICAL/HIGH, MEDIUM/LOW opcional.
-- **Warning**: solo HIGH presentes — Lexosi decide merge.
+- **Warning**: solo HIGH presentes — <user> decide merge.
 - **Block**: CRITICAL presente — fix mandatory antes merge.

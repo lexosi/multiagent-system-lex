@@ -25,7 +25,7 @@ Auto-match si AR Verse/UEFN cerrado (final_report.md verdict OK + TEST-GATE PASS
 - "Evidencia" MUST referenciar file:line + AR ID + TEST-GATE PASS date.
 - "Criticidad" MUST declarar level (HIGH / CRITICAL / MEDIUM) con razón verbatim postmortem.
 
-**Anti-pattern**: paraphrase para "claridad". Si phrasing original ambiguo → escalar Lexosi, NO reescribir.
+**Anti-pattern**: paraphrase para "claridad". Si phrasing original ambiguo → escalar <user>, NO reescribir.
 
 ## Markers AUTO-CURATED (solo edit zone permitida)
 
@@ -76,7 +76,7 @@ Auto-match si AR Verse/UEFN cerrado (final_report.md verdict OK + TEST-GATE PASS
 ### Pre-curation
 
 - [ ] `final_report.md` verdict OK verificado.
-- [ ] TEST-GATE Lexosi PASS verificado.
+- [ ] TEST-GATE <user> PASS verificado.
 - [ ] Read final_report "Lecciones para knowledge base" sección entera.
 - [ ] Cross-AR grep para confirmar ≥2 instancias O criticidad declarada.
 

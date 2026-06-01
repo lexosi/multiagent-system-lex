@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/session-start-substitute-paths.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/session-start-substitute-paths.ps1\"",
             "timeout": 60,
             "statusMessage": "Resolving multiagent placeholders..."
           }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/session-start-substitute-paths.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/session-start-substitute-paths.ps1\"",
             "timeout": 60,
             "statusMessage": "Resolving multiagent placeholders..."
           }
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/session-start-substitute-paths.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/session-start-substitute-paths.ps1\"",
             "timeout": 60,
             "statusMessage": "Resolving multiagent placeholders..."
           }
@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/session-start-substitute-paths.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/session-start-substitute-paths.ps1\"",
             "timeout": 60,
             "statusMessage": "Resolving multiagent placeholders..."
           }
@@ -51,7 +51,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/userpromptsubmit-visibility-reminder.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/userpromptsubmit-visibility-reminder.ps1\"",
             "timeout": 5,
             "statusMessage": "Visibility reminder..."
           }
@@ -63,7 +63,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/stop-knowledge-curator.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/stop-knowledge-curator.ps1\"",
             "timeout": 30,
             "statusMessage": "Scanning AR for curator pending..."
           }
@@ -73,7 +73,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/stop-no-auditor.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/stop-no-auditor.ps1\"",
             "timeout": 30,
             "statusMessage": "Scanning AR for auditor pending..."
           }
@@ -83,7 +83,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/stop-capture-skills-token-tax.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/stop-capture-skills-token-tax.ps1\"",
             "timeout": 30,
             "statusMessage": "Capturing skills token tax..."
           }
@@ -96,7 +96,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-guard-protected-files.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/pretooluse-guard-protected-files.ps1\"",
             "timeout": 10
           }
         ]
@@ -106,7 +106,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-guard-protected-files.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/pretooluse-guard-protected-files.ps1\"",
             "timeout": 10
           }
         ]
@@ -116,7 +116,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-guard-protected-files.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/pretooluse-guard-protected-files.ps1\"",
             "timeout": 10
           }
         ]
@@ -126,7 +126,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-guard-protected-files.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/pretooluse-guard-protected-files.ps1\"",
             "timeout": 10
           }
         ]
@@ -136,7 +136,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-verse-kb-advisory.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/pretooluse-verse-kb-advisory.ps1\"",
             "timeout": 10,
             "statusMessage": "Verse KB advisory check..."
           }
@@ -147,7 +147,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-block-scope-territory.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/pretooluse-block-scope-territory.ps1\"",
             "timeout": 10,
             "statusMessage": "Scope-territory hard-block check..."
           }
@@ -158,7 +158,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"F:/multiagent-system/hooks/pretooluse-capture-task-invocation.ps1\"",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/pretooluse-capture-task-invocation.ps1\"",
             "timeout": 10,
             "statusMessage": "Capturing task invocation (Fase 5.1)..."
           }

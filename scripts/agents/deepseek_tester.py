@@ -42,7 +42,7 @@ except ImportError:
     APIError = APIConnectionError = RateLimitError = Exception
 
 
-# Module-level params load (fail-loud at import per B3.0 Lexosi decision #5).
+# Module-level params load (fail-loud at import per B3.0 <user> decision #5).
 _AGENT_PARAMS = get_agent_params("tester")
 MAX_LOG_BYTES = _AGENT_PARAMS.get("max_log_bytes", 200 * 1024)
 TEST_VERDICTS = tuple(_AGENT_PARAMS.get("test_verdicts", ["PASS", "FAIL", "NOT_EXECUTABLE", "INCONCLUSIVE"]))
@@ -215,7 +215,7 @@ class DeepSeekTester(WrapperBase):
                 f"## Evidencia\n_(ninguna — log no provisto, test-command no provisto)_\n\n"
                 f"## Detalle\nTester invocado sin fuentes de log ni comando ejecutable. "
                 f"TEST-GATE humano UEFN obligatorio para este AR.\n\n"
-                f"## Recomendación\nLexosi ejecuta test manual en UEFN editor y pasa output log "
+                f"## Recomendación\n<user> ejecuta test manual en UEFN editor y pasa output log "
                 f"vía --log-text o --log-file en re-invocación.\n"
             )
             output_path.write_text(verdict_text, encoding="utf-8")

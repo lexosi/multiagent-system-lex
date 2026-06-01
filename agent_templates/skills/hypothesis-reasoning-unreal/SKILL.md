@@ -130,10 +130,10 @@ Hipótesis sin probe confirmatorio = **RECHAZADA**. NUNCA fix sin CONFIRMED en `
 
 Antes de declarar "bug lógica", verificar las 4 capas estado (disk / AR / in-memory / redirector chain) consistentes via `coherence-auditor-unreal` patterns D1-D5.
 
-### Lexosi observation precedence
+### <user> observation precedence
 
-Observación Lexosi > hipótesis agente. Pero distinguir modo:
-- **Evidencia**: probe empírico Lexosi contradice → falsify hipótesis + replan
+Observación <user> > hipótesis agente. Pero distinguir modo:
+- **Evidencia**: probe empírico <user> contradice → falsify hipótesis + replan
 - **Intuición**: opinión sin probe → discutir + pedir test
 - **Ambiguo**: PEDIR clarification verbatim ANTES de actuar
 
@@ -155,4 +155,4 @@ Cada bug class entry/probe `[UE 5.4]` o `[UE x.y]`. NO mezclar versions sin prob
 
 - `coherence-auditor-unreal/SKILL.md` D1-D5 source-of-truth divergence (subset C6)
 - `implementer-unreal/SKILL.md` G1-G4 fix patterns concretos
-- `F:\knowledge\unreal-python-editor\MEMORY.md` entries [UE 5.4] AUTO-CURATED
+- `<knowledge_root>\unreal-python-editor\MEMORY.md` entries [UE 5.4] AUTO-CURATED

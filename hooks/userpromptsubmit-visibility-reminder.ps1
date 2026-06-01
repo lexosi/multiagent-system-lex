@@ -3,7 +3,7 @@
     UserPromptSubmit hook — inyecta recordatorio de bloque [AGENTE-ACTIVO] cada turn.
 
 .DESCRIPTION
-    Cada vez que Lexosi envia prompt, este hook inyecta additionalContext
+    Cada vez que <user> envia prompt, este hook inyecta additionalContext
     recordando a root que la respuesta debe empezar con:
         [AGENTE-ACTIVO]: <nombre>
         [TAREA]: <una linea>
@@ -31,7 +31,7 @@ $ErrorActionPreference = "Continue"
 $PathsJson = if ($env:MULTIAGENT_PATHS_CONFIG -and (Test-Path -LiteralPath $env:MULTIAGENT_PATHS_CONFIG)) {
     $env:MULTIAGENT_PATHS_CONFIG
 } else {
-    "F:\multiagent-system\config\paths.json"
+    "<repo_root>\config\paths.json"
 }
 
 $RepoRoot     = Split-Path -Parent (Split-Path -Parent $PathsJson)
@@ -64,7 +64,7 @@ REGLA ROOT-ACTIVE BANNER (since 2026-05-18): si [AGENTE-ACTIVO] = "root direct" 
 
 ============================================================
 ATENCION - ROOT EJECUTANDO TAREA DIRECTA
-Lexosi: revisa que no usurpe rol de subagente.
+<user>: revisa que no usurpe rol de subagente.
 ============================================================
 
 Si [AGENTE-ACTIVO] = subagent (planner/implementer/reviewer/etc.) NO uses banner. Solo bloque normal.
@@ -88,7 +88,7 @@ Si turn implica trabajo bug-fix activo (hipotesis registrada), AnAde:
 CAP N2 EXTENSION (since 2026-05-18): si root usa Grep como pre-check de scope cleanup >=1 simbolo (preparando borrado / refactor cross-file), AnAde lineas:
 [PRECHECK]: simbolo=<X> | hits_grep=N | archivos_leidos_completos=<lista> | confianza=low/med/high
 
-Si archivos_leidos_completos < archivos donde grep dio hits -> confianza=low -> ESCALAR Lexosi antes de proseguir.
+Si archivos_leidos_completos < archivos donde grep dio hits -> confianza=low -> ESCALAR <user> antes de proseguir.
 
 Omision 2+ turns consecutivos mismo AR -> root-discipline-auditor flag violacion.
 "@

@@ -18,7 +18,7 @@
             * old_string cae fuera o cruza markers -> BLOCK
             * old_string integro dentro de markers -> ALLOW
       D. Bash/PowerShell con `git *` apuntando a proyectos UEFN (<uefn_root>\*) -> BLOCK
-         Proyectos UEFN usan Push Changes interno + save manual Lexosi. Cero git.
+         Proyectos UEFN usan Push Changes interno + save manual <user>. Cero git.
 
 .NOTES
     Trigger: PreToolUse matcher "Edit|Write|Bash|PowerShell"
@@ -36,7 +36,7 @@ $ErrorActionPreference = "Continue"
 $PathsJson = if ($env:MULTIAGENT_PATHS_CONFIG -and (Test-Path -LiteralPath $env:MULTIAGENT_PATHS_CONFIG)) {
     $env:MULTIAGENT_PATHS_CONFIG
 } else {
-    "F:\multiagent-system\config\paths.json"
+    "<repo_root>\config\paths.json"
 }
 $RepoRoot     = Split-Path -Parent (Split-Path -Parent $PathsJson)
 $DebugLogPath = Join-Path $RepoRoot "hooks\.debug.log"
@@ -103,7 +103,7 @@ if (-not $toolName -or -not $toolInput) {
 Write-DebugLog "ENTRY tool=$toolName cwd=$cwd"
 
 # --- Regla D: Bash/PowerShell con `git *` sobre <uefn_root>\* ---
-# Proyectos UEFN no usan git. Save = Push Changes interno + manual Lexosi.
+# Proyectos UEFN no usan git. Save = Push Changes interno + manual <user>.
 if ($toolName -eq "Bash" -or $toolName -eq "PowerShell") {
     $cmd = $toolInput.command
     if (-not [string]::IsNullOrWhiteSpace($cmd)) {
@@ -121,7 +121,7 @@ if ($toolName -eq "Bash" -or $toolName -eq "PowerShell") {
             $cwdInUefn = $cwdLower -match '^f:[\\/]+uefnprojects[\\/]' -or $cwdLower -match '^/f/uefnprojects/' -or $cwdLower -match '^/mnt/f/uefnprojects/'
 
             if ($targetsUefn -or $cwdInUefn) {
-                Emit-Deny "Proyectos UEFN en <uefn_root>\* NO usan git. Save = Push Changes (UEFN editor interno) + manual Lexosi. Comando bloqueado: '$cmd'. Si necesitas inspeccion read-only, usa Read/Glob/Grep en su lugar."
+                Emit-Deny "Proyectos UEFN en <uefn_root>\* NO usan git. Save = Push Changes (UEFN editor interno) + manual <user>. Comando bloqueado: '$cmd'. Si necesitas inspeccion read-only, usa Read/Glob/Grep en su lugar."
             }
         }
     }
@@ -152,7 +152,7 @@ if ($absPath -match '\\\.git\\') {
 
 # --- Regla B: Persistence Verse files ---
 if ($absPath -match '(?i)Content\\Verse\\Core\\[^\\]*Persistence[^\\]*\.verse$') {
-    Emit-Deny "Persistence Verse files require explicit Version bump declared in plan.md. Phase 4 does not yet auto-detect approved bumps. Escalate to Lexosi or update plan.md and request root approval. Path: $absPath"
+    Emit-Deny "Persistence Verse files require explicit Version bump declared in plan.md. Phase 4 does not yet auto-detect approved bumps. Escalate to <user> or update plan.md and request root approval. Path: $absPath"
 }
 
 # --- Regla C: CLAUDE.md user-global ---
@@ -214,7 +214,7 @@ if ($isClaudeMd) {
 
         # Verificar que new_string no introduce markers nuevos (intento de extender zona)
         if ($newString -and ($newString.Contains($startMarker) -or $newString.Contains($endMarker))) {
-            Emit-Deny "CLAUDE.md Edit attempts to write AUTO-CURATED marker tokens in new_string. Markers must be edited manually by Lexosi only."
+            Emit-Deny "CLAUDE.md Edit attempts to write AUTO-CURATED marker tokens in new_string. Markers must be edited manually by <user> only."
         }
 
         Write-DebugLog "CLAUDE.md Edit within markers: ALLOW"

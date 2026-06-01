@@ -7,7 +7,7 @@
     "PopulatePlacedEntity",
     "ReadExtraPersistentData",
     "MaybeBase B4",
-    "TEST-GATE Lexosi UEFN manual"
+    "TEST-GATE <user> UEFN manual"
   ],
   "planner-unreal": [
     "unreal.EditorAssetLibrary",
@@ -130,7 +130,7 @@
     "TEST-GATE PASS date"
   ],
   "knowledge-curator-unreal": [
-    "F:\\knowledge\\unreal-python-editor\\MEMORY.md",
+    "<knowledge_root>\\unreal-python-editor\\MEMORY.md",
     "AssetRegistry/Asset state inconsistencies",
     "[UE 5.4] tag",
     "Pending migration desde verse-uefn",
@@ -140,7 +140,7 @@
     "AssetRegistryHelpers"
   ],
   "knowledge-curator-blender": [
-    "F:\\SteamLibrary\\steamapps\\common\\Blender\\blender.exe",
+    "<blender_exe_path>",
     "[Blender 5.1.2]",
     "Manual list frozenset",
     "Y-axis convention coherence paste/UV",

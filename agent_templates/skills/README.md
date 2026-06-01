@@ -32,4 +32,4 @@ Description field DEBE contener keywords distintivos del dominio para auto-trigg
 - Master plan: `docs/agent_runs/AR_2026-05-28_p5-hybrid-master/plan.md`
 - Sub-plan Fase 1: `docs/agent_runs/AR_2026-05-28_p5-hybrid-fase1-skills/plan.md`
 - Research base: `docs/agent_runs/AR_2026-05-27_root-overreach-diagnosis/research_agent_architecture.md`
-- KB autoritativo UEFN: `F:\knowledge\verse-uefn\MEMORY.md` + `F:\knowledge\verse-uefn\docs\VERSE_SYNTAX_GUIDE.md`
+- KB autoritativo UEFN: `<knowledge_root>\verse-uefn\MEMORY.md` + `<knowledge_root>\verse-uefn\docs\VERSE_SYNTAX_GUIDE.md`

@@ -141,4 +141,4 @@ if EAL.does_asset_exist(canonical_sk_pkg):
 
 - `implementer-unreal/SKILL.md` G1-G4 gotchas con código defensive
 - `hypothesis-reasoning-unreal/SKILL.md` bug class taxonomy (GC collect, async load race, redirector loop)
-- `F:\knowledge\unreal-python-editor\MEMORY.md` entries [UE 5.4]
+- `<knowledge_root>\unreal-python-editor\MEMORY.md` entries [UE 5.4]

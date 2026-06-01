@@ -11,7 +11,7 @@ Auto-match si AR mencionan: `blender`, `bpy`, `bmesh`, `.blend`, `glTF`, `glb`, 
 
 ## Arquitectura típica pipeline Blender
 
-- **Workstation Lexosi**: Blender 5.1.2 Steam, path `F:\SteamLibrary\steamapps\common\Blender\blender.exe`. Working dir `<projects_root>\ExampleBlenderProject\ExampleAssetSet\`.
+- **Workstation <user>**: Blender 5.1.2 Steam, path `<blender_exe_path>`. Working dir `<projects_root>\ExampleBlenderProject\ExampleAssetSet\`.
 - **Orchestrator**: `process_blend.py` itera `.blend` files batch → invoca Blender headless per-file via subprocess → output `.glb` glTF embedded.
 - **Invocation pattern** `[Blender 5.1.2]`:
   ```
@@ -32,13 +32,13 @@ Auto-match si AR mencionan: `blender`, `bpy`, `bmesh`, `.blend`, `glTF`, `glb`, 
 
 ## Sprint/feature pattern Blender
 
-1. **Plan steps numerados ONE-FILE-PER-TURN** (Cap N4 STOP-GATE per-step Lexosi entre steps).
+1. **Plan steps numerados ONE-FILE-PER-TURN** (Cap N4 STOP-GATE per-step <user> entre steps).
 2. **Probe-first para discovery** API change/divergence: script `inspect_*.py` standalone read-only que dumpea CSV evidencia estática (ej. `inspect_mesh_bound_actions.py` discovery `action.fcurves` deprecated [Blender 5.1.2]).
 3. **Batch size matters**:
-   - `<10` modelos enumerable → **manual list hardcoded** `FROZEN_SET = frozenset({"name1", ...})` con verbatim ground truth Lexosi. Speedup ~12-15× vs auto-detection heurística.
+   - `<10` modelos enumerable → **manual list hardcoded** `FROZEN_SET = frozenset({"name1", ...})` con verbatim ground truth <user>. Speedup ~12-15× vs auto-detection heurística.
    - `≥10` con feature común → auto-detection heurística OK.
 4. **Tag versionado `[Blender 5.1.2]` obligatorio** en cada plan_step que cite API/comportamiento version-specific.
-5. **TEST-GATE Lexosi visual obligatorio** post-implementation (GLB viewer, in-engine UEFN/Unreal preview, o blender re-load). Compile success ≠ visual correct.
+5. **TEST-GATE <user> visual obligatorio** post-implementation (GLB viewer, in-engine UEFN/Unreal preview, o blender re-load). Compile success ≠ visual correct.
 
 ## Paths canónicos
 
@@ -46,7 +46,7 @@ Auto-match si AR mencionan: `blender`, `bpy`, `bmesh`, `.blend`, `glTF`, `glb`, 
 - MEMORY.md patterns: `{{paths.knowledge_base}}/blender-python/MEMORY.md`.
 - Project target típico: `<projects_root>\ExampleBlenderProject\ExampleAssetSet\`.
 - AR dir: `{{paths.docs.agent_runs}}/AR_<id>/`.
-- `process_blend.py` orchestrator: ubicado en working dir Lexosi (NO en multiagent-system repo).
+- `process_blend.py` orchestrator: ubicado en working dir <user> (NO en multiagent-system repo).
 
 ## Gotchas top-8 (planning-relevant)
 
@@ -62,7 +62,7 @@ Auto-match si AR mencionan: `blender`, `bpy`, `bmesh`, `.blend`, `glTF`, `glb`, 
 ## Anti-patterns plan
 
 - Plan que itera mesh edit con `bpy.ops.mesh.*` sin `temp_override` → background crash.
-- Auto-detection heurística complex para batch `<10` que Lexosi puede aportar verbatim ground truth → manual list supera.
+- Auto-detection heurística complex para batch `<10` que <user> puede aportar verbatim ground truth → manual list supera.
 - Plan que asume `action.fcurves` API → DEPRECATED [Blender 5.1.2]. Usar `action.slots → layers → strips → channelbag(slot).fcurves`.
 - Plan Cycles bake DIFFUSE multi-slot sin preneutralize broken Image Texture nodes → crash o patchwork.
 - Aplicar uint8 RGBA a normal/roughness/metallic maps → pérdida precisión visible.

@@ -4,7 +4,7 @@
 
 $ErrorActionPreference = "Continue"
 
-$PhrasesPath = "F:\multiagent-system\scripts\metrics\distinctive_phrases.json"
+$PhrasesPath = "<repo_root>\scripts\metrics\distinctive_phrases.json"
 # NOTE: SampleJsonl points to a specific historical dev session (pre-cutover 2026-05-29).
 # Path obsolete post-cutover (F--multiagent-system-dev deleted). Update before re-run with a
 # current session JSONL from %USERPROFILE%\.claude\projects\F--multiagent-system\<sid>\subagents\.

@@ -163,6 +163,6 @@ Every invocation of this subagent **MUST** emit two markers:
 ← implementer done, return to root.
 ```
 
-**Razón**: transparency cost + workflow understanding + performance debugging per turn para Lexosi. Root no puede inferir qué subagent corrió mid-flow sin marker explícito.
+**Razón**: transparency cost + workflow understanding + performance debugging per turn para <user>. Root no puede inferir qué subagent corrió mid-flow sin marker explícito.
 
 **Formato no negociable**: separadores `═` × 47 caracteres; field order fijo; nombre subagent literal (no abreviar).

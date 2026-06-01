@@ -136,7 +136,7 @@ eval_mesh = eval_obj.data  # post-modifiers final geometry
 ## Anti-patterns
 
 - `bpy.ops.wm.window_close` headless → crash.
-- Auto-detect heurística complex para batch `<10` modelos verbatim Lexosi disponible → manual `frozenset({...})` supera.
+- Auto-detect heurística complex para batch `<10` modelos verbatim <user> disponible → manual `frozenset({...})` supera.
 - `action.fcurves` directo → AttributeError [Blender 5.1.2].
 - Cycles bake multi-slot sin neutralize → crash global o patchwork visual.
 - Modificar `obj.data.vertices` sin `depsgraph.update()` antes de export → stale evaluated mesh.

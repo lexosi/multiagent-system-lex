@@ -95,7 +95,7 @@ GLB output:
 - Análisis estadístico vertex count usando `obj.data` con modifiers presentes → flag SEVERITY HIGH.
 - Cycles bake metric `slots_baked > 0` reportado sin verify visual (patchwork posible aún post-bake).
 - Filter MESH-bound actions solo single-keyframe → multi-kf estructural se cuela.
-- Manual list `FLY_EXAMPLEASSETS = frozenset({...})` desactualizada vs scene actual content → false negatives/positives. Verify list vs Lexosi ground truth periódicamente.
+- Manual list `FLY_EXAMPLEASSETS = frozenset({...})` desactualizada vs scene actual content → false negatives/positives. Verify list vs <user> ground truth periódicamente.
 
 ## Divergence severity
 

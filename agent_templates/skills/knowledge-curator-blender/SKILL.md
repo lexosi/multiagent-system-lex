@@ -1,6 +1,6 @@
 ---
 name: knowledge-curator-blender
-description: Skill para knowledge-curator cuando AR closed-ok target pipeline Blender Python (bpy, bmesh, --background --python, glTF export, Cycles bake, atlas, action.slots, process_blend, .blend, .glb). Pattern docs F:\knowledge\blender-python\MEMORY.md tag [Blender 5.1.2].
+description: Skill para knowledge-curator cuando AR closed-ok target pipeline Blender Python (bpy, bmesh, --background --python, glTF export, Cycles bake, atlas, action.slots, process_blend, .blend, .glb). Pattern docs <knowledge_root>\blender-python\MEMORY.md tag [Blender 5.1.2].
 ---
 
 # knowledge-curator-blender
@@ -15,9 +15,9 @@ Auto-match cuando AR closed-ok requiere curación KB pattern Blender (final_repo
 - **Markers**: `<!-- AUTO-CURATED:START -->` ... `<!-- AUTO-CURATED:END -->`. Solo curator edita entre markers.
 - **Append-order**: new entries en TOP (recent first), append antes de marker END.
 
-## Workstation context Lexosi
+## Workstation context <user>
 
-- **Blender 5.1.2 Steam**: `F:\SteamLibrary\steamapps\common\Blender\blender.exe`.
+- **Blender 5.1.2 Steam**: `<blender_exe_path>`.
 - **Working dir típico**: `<projects_root>\ExampleBlenderProject\ExampleAssetSet\`.
 - Entries deben asumir esta workstation salvo override explícito.
 
@@ -27,7 +27,7 @@ Cada entry empieza con tag Blender version:
 
 | Tag | Significado |
 |---|---|
-| `[Blender 5.1.2]` | Validado solo Blender 5.1.2 (Lexosi current) |
+| `[Blender 5.1.2]` | Validado solo Blender 5.1.2 (<user> current) |
 | `[Blender 5.1+]` | Disponible 5.1 en adelante |
 | `[Blender 4.x-5.x]` | Validado cross-major-version |
 | `[Blender all]` | API estable cross-version (rare, justify) |
@@ -53,12 +53,12 @@ Pattern documentable si:
 ### Patterns MEDIA precedentes
 
 - Single offset constant insuficiente batches heterogéneos (AR_2026-05-26 — sección "Lecciones" explicit).
-- uint8 RGBA BaseColor size reduction GLB ~7% (AR_2026-05-26 — Lexosi explicit ask + empirical validation).
+- uint8 RGBA BaseColor size reduction GLB ~7% (AR_2026-05-26 — <user> explicit ask + empirical validation).
 
 ## Phrasing literal
 
 - **Verbatim final_report**: extraer lección literal desde final_report.md sección "Lecciones para knowledge base". NO paraphrase.
-- **Verbatim Lexosi**: si TEST-GATE/feedback cita Lexosi → comillas dobles + atribución.
+- **Verbatim <user>**: si TEST-GATE/feedback cita <user> → comillas dobles + atribución.
 - **NO relajar**. Si final_report dice "crítico" → entry dice "crítico" (no "importante"/"recomendado").
 
 ## Entry template
@@ -86,7 +86,7 @@ Pattern documentable si:
 1. **Read** `final_report.md` AR closed-ok target.
 2. **Identify** sección "Lecciones para knowledge base" / "Pattern docs" / "Criticidad declarada".
 3. **Cross-check** vs MEMORY.md existing entries — duplicates? extensions?
-4. **Threshold check**: ≥2 instancias O criticidad declarada? Si NO → escalate Lexosi (no append).
+4. **Threshold check**: ≥2 instancias O criticidad declarada? Si NO → escalate <user> (no append).
 5. **Append entry** entre markers AUTO-CURATED en MEMORY.md (TOP, antes END marker).
 6. **Verify**: tag `[Blender x.y.z]` presente, verbatim phrasing, evidence cited.
 7. **Report**: `curator_report.md` en AR dir con entry appended + justification.

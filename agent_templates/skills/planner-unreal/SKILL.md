@@ -15,13 +15,13 @@ Cada step KB-bound o gotcha referenciada en `plan.md` lleva tag UE version:
 
 | Tag | Uso |
 |---|---|
-| `[UE 5.4]` | Validado solo 5.4 (default actual Lexosi) |
+| `[UE 5.4]` | Validado solo 5.4 (default actual <user>) |
 | `[UE 5.4-5.6]` | Validado rango |
 | `[UE ≥5.7]` | Disponible 5.7+ |
 | `[UE all]` | Estable cross-version (rare, justificar) |
 | `[UE ?]` | No verificado (flag future validation) |
 
-Constraint actual: Lexosi UE 5.4. NO planear features dependientes de APIs `[UE ≥5.7]` sin probe explícito previo.
+Constraint actual: <user> UE 5.4. NO planear features dependientes de APIs `[UE ≥5.7]` sin probe explícito previo.
 
 ## Arquitectura Editor Python
 
@@ -72,9 +72,9 @@ Planear pasos que mantengan estas 4 capas consistentes. Divergence patterns docu
 
 ## Constraints planning
 
-- **STOP-GATE per-step Lexosi**: feature multi-step UE Editor batched LOW+MED, HIGH solo (Cap N4)
+- **STOP-GATE per-step <user>**: feature multi-step UE Editor batched LOW+MED, HIGH solo (Cap N4)
 - **TEST-GATE manual UEFN/UE Editor**: post-implementer + pre-doc-writer. NO automatizable Editor Python (Editor abierto manual)
-- **Investigación grep REAL vs COSMETIC** `[UE 5.4]`: whitelist baseline (Material compile transient, `Cube_*_root` delete false) + grep separated FAIL log → Lexosi decide scope
+- **Investigación grep REAL vs COSMETIC** `[UE 5.4]`: whitelist baseline (Material compile transient, `Cube_*_root` delete false) + grep separated FAIL log → <user> decide scope
 - **NO planear EAL.rename_asset sin defensive Texture2D collision check** `[UE 5.4]` (CRITICAL 3ª instancia meta-pattern AssetRegistry inconsistencies)
 
 ## Anti-patterns planning
@@ -92,4 +92,4 @@ Entries `verse-uefn/MEMORY.md` que son UE Editor (no UEFN-specific) pendientes m
 - EditorAssetSubsystem
 - AssetRegistryHelpers
 
-Mantener en `verse-uefn/` solo: VFS mount per-project UEFN, allow-list validation UEFN, M_BoneAnimation/M_BrainrotAnimation parents UEFN materials.
+Mantener en `verse-uefn/` solo: VFS mount per-project UEFN, allow-list validation UEFN, M_BoneAnimation/M_ExampleAnimation parents UEFN materials.

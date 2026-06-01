@@ -7,7 +7,7 @@ post-Opción 1 (2026-05-18). Detecta:
 - Recomendaciones KEEP / DOWNGRADE (post promo) / REVIEW prompt
 
 Output: docs/model_reviews/MR_<YYYY-MM-DD>.md
-Side-effect: actualiza F:/multiagent-system/.last_model_review timestamp.
+Side-effect: actualiza <repo_root>/.last_model_review timestamp.
 
 CLI:
     --task-id AR_<id>            (required)
@@ -43,7 +43,7 @@ except ImportError:
     APIError = APIConnectionError = RateLimitError = Exception
 
 
-# Module-level params load (fail-loud at import per B3.0 Lexosi decision #5).
+# Module-level params load (fail-loud at import per B3.0 <user> decision #5).
 _AGENT_PARAMS = get_agent_params("model_allocator")
 LAST_REVIEW_PATH = MULTIAGENT_ROOT / ".last_model_review"
 DEFAULT_OUTPUT_DIR = MULTIAGENT_ROOT / "docs" / "model_reviews"
@@ -57,7 +57,7 @@ SYSTEM_PROMPT = (
     "ajustes de asignación de modelos.\n\n"
     "REGLAS INQUEBRANTABLES:\n"
     "1. NO inventes signals. Si data ventana es nula, output 'no data, KEEP all'.\n"
-    "2. Solo 2 tiers permitidos (Opción 1 aprobada Lexosi 2026-05-18): Anthropic opus + DeepSeek v4-pro.\n"
+    "2. Solo 2 tiers permitidos (Opción 1 aprobada <user> 2026-05-18): Anthropic opus + DeepSeek v4-pro.\n"
     "3. NUNCA propongas sonnet ni v4-flash como upgrade (eliminados arquitectónicamente).\n"
     "4. Recomendaciones permitidas:\n"
     "   - KEEP (no signal, mantener asignación actual)\n"

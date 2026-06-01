@@ -34,7 +34,7 @@ except ImportError:
     APIError = APIConnectionError = RateLimitError = Exception
 
 
-# Module-level params load (fail-loud at import per B3.0 Lexosi decision #5).
+# Module-level params load (fail-loud at import per B3.0 <user> decision #5).
 _AGENT_PARAMS = get_agent_params("researcher")
 MAX_CONTEXT_BYTES = _AGENT_PARAMS.get("max_context_bytes", 500 * 1024)
 
@@ -241,9 +241,9 @@ class DeepSeekResearcher(WrapperBase):
 
 def _resolve_smoke_context_path() -> str:
     """Resuelve path de smoke test desde paths.json. Falla claro si no está."""
-    paths_json = Path(r"F:\multiagent-system\config\paths.json")
+    paths_json = Path(r"<repo_root>\config\paths.json")
     if not paths_json.exists():
-        raise RuntimeError("smoke test needs F:\\multiagent-system\\config\\paths.json to exist")
+        raise RuntimeError("smoke test needs <repo_root>\\config\\paths.json to exist")
     with open(paths_json, encoding="utf-8") as f:
         data = json.load(f)
     domain = data.get("domains", {}).get("verse-uefn")

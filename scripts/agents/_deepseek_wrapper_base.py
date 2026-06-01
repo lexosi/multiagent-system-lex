@@ -56,7 +56,7 @@ def _resolve_paths_json() -> Path:
 
     Precedence:
       1. MULTIAGENT_PATHS_CONFIG env var (override per-machine/test sandbox).
-      2. Hardcoded PROD fallback: F:\\multiagent-system\\config\\paths.json.
+      2. Hardcoded PROD fallback: <repo_root>\\config\\paths.json.
 
     If env var is set but points to non-existent path, emits WARN to stderr
     and falls back to PROD path (fail-safe, not silent).
@@ -71,7 +71,7 @@ def _resolve_paths_json() -> Path:
             file=sys.stderr,
             flush=True,
         )
-    return Path(r"F:\multiagent-system\config\paths.json")
+    return Path(r"<repo_root>\config\paths.json")
 
 
 def _load_paths_config() -> Path:
@@ -89,7 +89,7 @@ def _load_paths_config() -> Path:
         except Exception as e:
             print(f"[WARN] paths.json load failed: {e}", file=sys.stderr, flush=True)
             # fallback to next
-    return Path(os.environ.get("MULTIAGENT_ROOT", r"F:\multiagent-system"))
+    return Path(os.environ.get("MULTIAGENT_ROOT", r"<repo_root>"))
 
 
 MULTIAGENT_ROOT = _load_paths_config()
@@ -97,8 +97,8 @@ AGENT_RUNS_DIR = MULTIAGENT_ROOT / "docs" / "agent_runs"
 
 
 # ---------- B3.0 config resolution (agents.json + models.json) ----------
-# Source-of-truth: F:\multiagent-system\config\agents.json + config/models.json.
-# Lazy + cached module-level. Fail-loud if missing/malformed (B3.0 decision Lexosi #5).
+# Source-of-truth: <repo_root>\config\agents.json + config/models.json.
+# Lazy + cached module-level. Fail-loud if missing/malformed (B3.0 decision <user> #5).
 
 _AGENTS_CONFIG_PATH = MULTIAGENT_ROOT / "config" / "agents.json"
 _MODELS_CONFIG_PATH = MULTIAGENT_ROOT / "config" / "models.json"
@@ -129,7 +129,7 @@ def _load_models_config() -> dict:
 
 
 def get_agent_params(agent_name: str) -> dict:
-    """Return params dict for agent. Fail-loud if not registered (B3.0 decision Lexosi #5)."""
+    """Return params dict for agent. Fail-loud if not registered (B3.0 decision <user> #5)."""
     agents = _load_agents_config()["agents"]
     if agent_name not in agents:
         raise KeyError(
@@ -243,7 +243,7 @@ class WrapperBase(ABC):
         temperature: float | None = None,
     ) -> str:
         # NOTE: max_tokens=393216 es el MAX REAL aceptado por DeepSeek API v4-pro (probed 2026-05-18).
-        # Rango válido API: [1, 393216]. Above → BadRequestError 400. Lexosi directive 2026-05-18:
+        # Rango válido API: [1, 393216]. Above → BadRequestError 400. <user> directive 2026-05-18:
         # "no se vea limitado". Es CEILING (no forcing) — modelo decide cuándo terminar.
         # Costo real solo paga tokens generados (típico 2-8K en mayoría tareas, no 393K).
         """Single chat completion call. Accumulates token usage + cost across calls.

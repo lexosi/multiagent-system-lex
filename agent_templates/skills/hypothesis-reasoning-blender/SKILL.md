@@ -70,12 +70,12 @@ Auto-match cuando bug-fix AR menciona pipeline Blender (`bpy`, `bmesh`, `process
 - **Síntoma**: subset modelos OK con constant, otros below ground / floating / clipping.
 - **Hipótesis**: batch tiene geometry heterogénea (bbox Z varying) → constant única no converge.
 - **Probe**: dump `obj.dimensions.z` + bbox per modelo CSV; compare delta needed per modelo.
-- **Fix**: override CSV/dict per-name. Pattern AR_2026-05-26 fly exampleassets (defer manual confirmed Lexosi).
+- **Fix**: override CSV/dict per-name. Pattern AR_2026-05-26 fly exampleassets (defer manual confirmed <user>).
 
 ### Class I: Auto-detection heurística falsable batch pequeño
 
 - **Síntoma**: heurística marca false-positive/negative en subset enumerable.
-- **Hipótesis**: discriminación binaria de subset `<10` modelos verbatim Lexosi disponible — heurística overhead innecesario.
+- **Hipótesis**: discriminación binaria de subset `<10` modelos verbatim <user> disponible — heurística overhead innecesario.
 - **Fix**: replace con `frozenset({...})` manual list ground truth verbatim. Speedup ~12-15× (AR_2026-05-26).
 
 ## Probe patterns
@@ -116,7 +116,7 @@ CSV output evidencia estática — analizable post-run sin re-invoke Blender.
 - **Max 3 attempts por hipótesis**. 4º → class-jump obligatorio.
 - **Probe antes de fix**. Hipótesis sin probe confirmatorio = RECHAZADA.
 - **Class-jump válido pattern Cycles bake**: 2 attempts FAIL multi-slot → swap a paint pure-math (AR_2026-05-26 multitex-atlas precedent).
-- **Observación Lexosi > hipótesis agente**. Si Lexosi reporta visual fail con probe empírico → falsifica hipótesis agente, re-plan.
+- **Observación <user> > hipótesis agente**. Si <user> reporta visual fail con probe empírico → falsifica hipótesis agente, re-plan.
 
 ## Source-of-truth checks pre-hipótesis
 
@@ -130,4 +130,4 @@ CSV output evidencia estática — analizable post-run sin re-invoke Blender.
 
 - CSV probe output con expected vs observed.
 - Pre/post-fix diff measurable.
-- TEST-GATE Lexosi visual PASS (GLB viewer O in-engine preview).
+- TEST-GATE <user> visual PASS (GLB viewer O in-engine preview).
