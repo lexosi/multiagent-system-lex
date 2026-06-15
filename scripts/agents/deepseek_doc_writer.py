@@ -23,7 +23,6 @@ Audit:  <root>/docs/agent_runs/<task_id>/deepseek_doc_writer_<UTCstamp>.md
 """
 import argparse
 import json
-import re
 import sys
 import traceback
 from pathlib import Path
