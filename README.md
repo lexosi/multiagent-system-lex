@@ -1,5 +1,7 @@
 # multiagent-system
 
+[![CI](https://github.com/lexosi/multiagent-system-lex/actions/workflows/ci.yml/badge.svg)](https://github.com/lexosi/multiagent-system-lex/actions/workflows/ci.yml)
+
 > **Process discipline enforced by hooks, not good faith.**
 > A root-driven multi-agent harness where enforcement is a first-class layer:
 > advisories that measured **0% compliance** in practice were replaced with
