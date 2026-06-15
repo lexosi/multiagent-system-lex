@@ -323,7 +323,7 @@ class DeepSeekHypothesisTracker(WrapperBase):
         if hyp_file.exists() and not self.args.force:
             self._emit_result(
                 status="error",
-                summary=f"hypotheses.md ya existe. NO uses init para AR en progreso — usa add/update/falsify/list.",
+                summary="hypotheses.md ya existe. NO uses init para AR en progreso — usa add/update/falsify/list.",
                 result={
                     "existing_file": str(hyp_file),
                     "workflow_hint": {
@@ -431,8 +431,8 @@ class DeepSeekHypothesisTracker(WrapperBase):
             "text": self.args.hypothesis_text,
             "log": [
                 f"- created: {_iso_now()}",
-                f"- attempts: 0",
-                f"- status: open",
+                "- attempts: 0",
+                "- status: open",
             ],
         }
         data["Open"].append(block)
@@ -502,7 +502,7 @@ class DeepSeekHypothesisTracker(WrapperBase):
                         "max_attempts": MAX_ATTEMPTS_PER_HYPOTHESIS,
                         "required_actions": [
                             f"(a) Falsify {self.args.hypothesis_id} con probe específico (action=falsify).",
-                            f"(b) Escalar a <user> con class-jump rationale verbatim.",
+                            "(b) Escalar a <user> con class-jump rationale verbatim.",
                             f"(c) Reformular como nueva hipótesis en capa de abstracción distinta "
                             f"(action=class-jump --from-hyp {self.args.hypothesis_id} --rationale '...' --hypothesis-text '...').",
                         ],
@@ -595,8 +595,8 @@ class DeepSeekHypothesisTracker(WrapperBase):
             "text": self.args.hypothesis_text,
             "log": [
                 f"- created: {_iso_now()}",
-                f"- attempts: 0",
-                f"- status: open",
+                "- attempts: 0",
+                "- status: open",
                 f"- class-jump-from: {self.args.from_hyp}",
                 f"- class-jump-rationale: {self.args.rationale.strip()}",
             ],

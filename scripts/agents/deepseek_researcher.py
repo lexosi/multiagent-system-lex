@@ -17,7 +17,6 @@ Audit:  <root>/docs/agent_runs/AR_<task_id>/deepseek_researcher_<UTCstamp>.md
 """
 import argparse
 import json
-import re
 import sys
 import traceback
 from pathlib import Path

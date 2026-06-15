@@ -1,0 +1,7 @@
+# Ruff config — lint the wrappers, tests, and metrics.
+# Default rule set (pyflakes F + pycodestyle E4/E7/E9) keeps signal high without
+# style noise (no line-length gate on an existing codebase).
+target-version = "py311"
+
+# Archived probe/experiment scripts are not part of the maintained surface.
+extend-exclude = ["scripts/metrics/archive"]
