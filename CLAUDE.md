@@ -29,13 +29,13 @@ No hay `pytest` / build system. Validación = smoke tests de cada wrapper + ejec
 
 ## Arquitectura (lo que requiere leer varios archivos)
 
-### Roster — 14 agentes registrados (source-of-truth: `config/agents.json`)
+### Roster — 17 agentes registrados
 
-| Tipo | Agentes | Modelo runtime | Source-of-truth |
+| Tipo | Runtime | Agentes | Source-of-truth |
 |---|---|---|---|
-| Planning / review / specialist / audit | `planner`, `reviewer`, `tester`, `knowledge-curator`, `implementer`, `specialist-verse`, `coherence-auditor`, `hypothesis-reasoning`, `outcome-auditor`, `process-auditor` | Opus (tier resuelto `config/agents.json`) | `agent_templates/*.md` |
-| Thin-wrappers (bridge Task→Bash→Python) | `researcher`, `hypothesis-tracker`, `doc-writer`, `tech-debt-scanner` | Sonnet (delegan a DeepSeek) | `agent_templates/*.md` |
-| Python wrappers DeepSeek | `deepseek_researcher.py`, `deepseek_hypothesis_tracker.py`, `deepseek_doc_writer.py`, `deepseek_tech_debt_scanner.py` | `deepseek-v4-flash` (curator: `deepseek-v4-pro`) | `scripts/agents/` + `_deepseek_wrapper_base.py` |
+| claude_md (11) | Opus | `planner`, `implementer`, `reviewer`, `knowledge-curator`, `coherence-auditor`, `hypothesis-reasoning`, `specialist-verse`, `specialist-unreal`, `specialist-blender`, `outcome-auditor`, `process-auditor` | `agent_templates/*.md` |
+| deepseek_wrapper (5) | Sonnet→DeepSeek | `researcher`, `doc_writer`, `tech_debt_scanner`, `tester`, `model_allocator` | `scripts/agents/*.py` |
+| deepseek_wrapper_storage (1) | N/A (storage puro, sin LLM) | `hypothesis_tracker` | `scripts/agents/*.py` |
 
 `agent_templates/` es source-of-truth versionable. SessionStart hook (`hooks/session-start-substitute-paths.ps1`) regenera `<repo_root>\.claude\agents\*.md` (project-level, **UTF-8 sin BOM**) sustituyendo placeholders `{{paths.X.Y}}` con valores de `config/paths.json`. **No edites `~/.claude/agents/*.md` (CC los ignora en Windows) ni `.claude/agents/*.md` directamente** — el hook los sobrescribe. Edita en `agent_templates/`.
 

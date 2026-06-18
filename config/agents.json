@@ -54,7 +54,13 @@
       "enabled": true,
       "params": {}
     },
-    "root-discipline-auditor": {
+    "outcome-auditor": {
+      "type": "claude_md",
+      "tier": "high",
+      "enabled": true,
+      "params": {}
+    },
+    "process-auditor": {
       "type": "claude_md",
       "tier": "high",
       "enabled": true,
