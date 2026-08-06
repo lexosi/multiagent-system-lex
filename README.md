@@ -45,7 +45,7 @@ Root produces an explicit plan, invokes one specialist per step, collects each r
 
 ## Key findings
 
-The enforcement claim is measured, not asserted. Advisory role-discipline rules produced **no measurable behavioral change**; enforcement was redesigned as deny-by-default hooks that prevent the violation by construction. Canonical claim (reproducible by re-running the eval):
+The enforcement claim is measured, not asserted. Advisory role-discipline rules produced **no measurable behavioral change**; enforcement was redesigned as deny-by-default hooks that prevent the violation by construction. Canonical claim (measured from the enforcement logs over the cutover period):
 
 > After advisory role-discipline rules produced 0/3 compliance in the three runs immediately following the rule's canonization (2026-05-26), enforcement was reimplemented as deny-by-default PreToolUse hooks (cutover 2026-06-01, commit b3efe00). Over the following period (2026-06-02..2026-08-04), every direct root write to planner-owned files hit the gate: all 9 blocked tool-calls across 7 runs; 4 were allowed only through an explicit, logged, one-shot override — 0 unauthorized writes.
 

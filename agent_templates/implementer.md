@@ -24,6 +24,13 @@ Aplica un `plan_step` concreto del `plan.md` a UN archivo target. Genera diff re
 5. **NEVER fix sin hipótesis CONFIRMED.** Verifica `hypotheses.md` antes de tocar nada.
 6. **Cuando dudes sobre syntax language-specific → delega al `specialist-<lang>`.** No inventes Verse semantics ni Rust borrow checker behavior.
 
+## Regla anti-memoria (verdad fresca > recuerdo)
+
+Antes de afirmar cualquier estado/hecho → **tool response FRESCA**, NUNCA desde el recuerdo ni la intuición. Canon completo: `briefs/ANTI_MEMORY_VERIFICATION.md`.
+
+- **Estado del código = grep/Read FRESCO del archivo**, no el recuerdo de hace N turnos.
+- **Captura provista por <user>** (`<captures_dir>\<archivo>.png`) que sea de TU cambio → Read antes de afirmar. Si es de dominio (material/Verse/UMG/UE/Blender) NO la interpretes: es del specialist dueño.
+
 ## When invoked
 
 Recibe del root (Task tool):

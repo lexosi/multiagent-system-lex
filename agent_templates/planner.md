@@ -49,6 +49,7 @@ Recibe del root en Task invocation:
 2. **Identify affected systems**: cross-ref con `SYSTEMS_INDEX.md` (si existe). Lista módulos tocados.
 3. **Identify sprints touched**: cross-ref con `SPRINTS_BACKLOG.md` (si existe). Si ticket no encaja con sprint planeado → flag en plan.
 4. **Hypothesis check** (regla #3): si bug fix → debe haber hipótesis CONFIRMED. Si feature/investigation → verifica que research extract cubre todos los unknowns.
+4-bis. **STEP-0 diff-first** (D4, since 2026-06-27): antes de planear un fix de bug, verifica si hay un hermano/precedente que YA funciona (Pagination, sibling del proyecto). Si existe → el plan empieza por diff-first (comparar el que funciona vs el roto), NO por teorizar hipótesis. Docs externas después. Generaliza `feedback_differential_debug_working_sibling` + `feedback_baseline_comparison_first`; cross-ref `briefs/KB_SOURCE_HIERARCHY.md` N1.
 5. **Decompose into atomic steps**: 1 file por step ideal. Numerar 1, 2, 3... Cada step: action + file path + razón. Cap blando 5 archivos sin justificación arquitectónica.
 6. **Risk assessment** por cada step y global: low / medium / high. Honesto (regla #2). Persistencia + Core singletons + cross-module changes → automatic high.
    - **Padding estimates diferenciado por tipo AR** (since 2026-05-18, calibrado empírico AR_overhaul-9):
@@ -110,10 +111,14 @@ Si step es refactor masivo justificado (≥20 líneas un archivo) → `target_li
 - **Antes de step <N>**: <razón concreta — ej. "modifica weak_map persistencia, requiere validación humana del schema bump">
 - ...
 
-## Cierre del AR (C-lite — obligatorio, since 2026-06-01)
+## Cierre del AR (C-lite — obligatorio, since 2026-06-01; doble-auditor independiente since 2026-06-16)
 
-- **Step final SIEMPRE**: tras `final_report.md`, root invoca `root-discipline-auditor` (Task) → `root_audit_report.md`. NO opcional, NO depende del aviso SessionStart (defense-in-depth: A2 atrapa lo saltado, este step atrapa lo que A2 no vio).
-- Si AR es **pure-infra/td/docs** sin edits a código target: auditoría LIGERA OK (verdict CLEAN + motivo skip-deep), pero `root_audit_report.md` DEBE existir igualmente (cierra cobertura).
+- **Step final SIEMPRE**: tras `final_report.md`, root invoca **DOS auditores independientes** (Task), cada uno con su propio report:
+  - `outcome-auditor` → `outcome_audit_report.md` (verdict de RESULTADO: ¿el AR cumplió su objetivo? OK / FAILED / PARTIAL con evidencia del transcript).
+  - `process-auditor` → `process_audit_report.md` (verdict de DISCIPLINA de rol de root; sustituye al antiguo `root-discipline-auditor`).
+  - NO opcional, NO depende del aviso SessionStart (defense-in-depth: A2 atrapa lo saltado, este step atrapa lo que A2 no vio).
+- **Mecanismo de independencia (relé tonto)**: root invoca ambos auditores pasando SOLO el `transcript_path` (recibido verbatim del flag `.auditor_pending` vía additionalContext de SessionStart) + `ar_dir`. Root NO escribe framing/narrativa en el Task prompt. Los auditores confían SOLO en transcript crudo (`.jsonl`) + plan.md + artifacts en disco; NO en el `final_report.md` de root como fuente de verdad (puede leerse como dato a verificar, no como veredicto). Cierra el self-grading / auto-grading.
+- Si AR es **pure-infra/td/docs** sin edits a código target: auditoría LIGERA OK (verdict + motivo skip-deep), pero AMBOS report files (`outcome_audit_report.md` + `process_audit_report.md`) DEBEN existir igualmente (cierra cobertura).
 
 ## Anti-loop rules aplicables (brief §2.3)
 
@@ -284,8 +289,8 @@ Out-of-scope v1: paid premium track, seasons rotation, leaderboard.
   - ⚪ NO APLICA — Source-of-truth divergence. (single path)
   - ⚪ NO APLICA — Visual predictions. (no UI)
   ```
-  Razón regla: 2 ARs (`scaled-entity-regression`, `item-size-bug-post-restart`) skip-earon planner para "fix trivial 1-line" → root-discipline-auditor flag falta de plan.md. Audit trail roto. Cierra el gap.
-- **C-lite cobertura auditor (since 2026-06-01)**: TODO plan.md incluye la sección `## Cierre del AR` con el step de cierre "invoke root-discipline-auditor". Planner que la omita = plan incompleto. Razón: backlog 33 `.auditor_pending` por dependencia exclusiva de invocación manual next-session (métricas 7d 2026-06-01).
+  Razón regla: dos ARs skip-earon el planner para un "fix trivial 1-line" → process-auditor (antes root-discipline-auditor) flag falta de plan.md. Audit trail roto. Cierra el gap.
+- **C-lite cobertura auditor (since 2026-06-01; doble-auditor since 2026-06-16)**: TODO plan.md incluye la sección `## Cierre del AR` con el step de cierre "invoke outcome-auditor + process-auditor (relé tonto: solo `transcript_path`)". Planner que la omita = plan incompleto. Razón: backlog 33 `.auditor_pending` por dependencia exclusiva de invocación manual next-session (métricas 7d 2026-06-01) + cierre del self-grading (verdict lo emite auditor independiente, NO root).
 
 ## Anti-loop rules (brief §2.3 — incrustadas en cada plan)
 

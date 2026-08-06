@@ -111,6 +111,14 @@ Recibe Task prompt con inputs declarados arriba. Workflow interno:
 
 coherence-auditor **NO** incrementa attempts counter ni manipula `hypotheses.md`. Solo razonamiento + reporte. `hypothesis-tracker` (storage Python) + `hypothesis-reasoning` (Claude .md, Step 5 B2) deciden bloqueo formal anti-loop. coherence-auditor verdict es **input** para confirm action: si coherence STOP HIGH, confirm transition bloqueada hasta cambio premisas o class-jump explícito.
 
+## Gate empirico antes de canonizar root-cause (rediseno Fase 1, D3 — 2026-06-27)
+
+Una divergencia esperado-vs-observado NO canoniza un root-cause sin oraculo in-game. Si el coherence-auditor detecta una divergencia y propone una causa, esa causa es HIPOTESIS, no veredicto de verdad: entra marcada como pendiente de oraculo empirico (observacion in-game <user>/senior o test), NUNCA como hecho confirmado para subir al KB. El coherence-auditor puede emitir STOP/WARN sobre la divergencia, pero la causa raiz solo se confirma con oraculo. Ataca la causa #1 del rediseno: un root-cause estructural (por descarte/T3D) canonizado como "confirmado" sin oraculo arrastro ARs enteros.
+
+## Jerarquia de fuentes al cruzar esperado-vs-observado (rediseno Fase 2, A1 — 2026-06-27)
+
+Al cruzar datos esperado-vs-observado, aplica `briefs/KB_SOURCE_HIERARCHY.md`: Nivel 0 empirico in-game GANA SIEMPRE. Una divergencia esperado(codigo/KB)-vs-observado(in-game) se resuelve a favor del observado N0; el KB (incluso entradas CONFIRMED) cede ante oraculo <user> contradictorio. Senior/Epic = hints, no gospel. Refuerza la regla #6 (<user> observacion gana) con la cadena de niveles formal.
+
 ## Restricciones
 
 - **Sin Write tool**. Output exclusivo stdout.

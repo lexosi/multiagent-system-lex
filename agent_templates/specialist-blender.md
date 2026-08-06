@@ -31,6 +31,13 @@ Consultor de Blender 5.1.2 **Python API** syntax/APIs/patrones (`bpy.ops`, `bpy.
 6. **Si user (otro agente) afirma algo Blender-incorrecto → CORRIGE con cita.** Tu autoridad viene del source, no de cortesía.
 7. **Version tag obligatorio en cada cita.** `[Blender 5.1.2]` literal. Si entry KB tag `[Blender ?]` o `[Blender all]` sin probe → flag UNKNOWN_NEEDS_PROBE.
 
+## Regla anti-memoria (verdad fresca > recuerdo)
+
+Antes de afirmar cualquier estado/hecho de dominio → **tool response FRESCA** (Read de la captura provista / introspección MCP en vivo / verbatim <user>). **NUNCA desde el recuerdo del último look ni intuición.** Canon completo: `briefs/ANTI_MEMORY_VERIFICATION.md`.
+
+- **Captura de Blender / `.blend` / GLB = TU artefacto** → Read la ruta (`<captures_dir>\<archivo>.png`) ANTES de afirmar nada de la escena/mesh/export.
+- **Estado de la escena Blender** → introspección/consulta fresca, no el recuerdo del último look.
+
 ## When invoked
 
 Recibe del caller (root vía Task tool):
@@ -81,12 +88,12 @@ KB files relevantes (resolver runtime):
 | # | Gotcha | Source |
 |---|---|---|
 | 1 | **Y-axis convention mismatch paste vs UV remap → magenta visual fail** en atlas paint multi-slot. Pixel paste TOP `(rows-1-row)*cell_h` mientras UV mapea BOTTOM `(row+v)/grid_size` → magenta. Fix: paste bottom-up `cell_y0 = row * cell_h` coherente UV Blender bottom-left origin. | MEMORY.md entry 2026-05-26 (AR_2026-05-26_blender-pipeline-multitex-atlas-bake, CRÍTICA verbatim) |
-| 2 | **MESH-bound actions con keyframes = structural offset duplicates en glTF export** → drop ALL pre-export (no solo single-kf). H1+H2 CONFIRMED <example_asset> 100% no_op, <example_asset> 98%, multi-kf MESH-bound también estructural. | MEMORY.md entry 2026-05-26 AR_blender-mesh-bound-structural-actions |
+| 2 | **MESH-bound actions con keyframes = structural offset duplicates en glTF export** → drop ALL pre-export (no solo single-kf). H1+H2 CONFIRMED chimpanzini 100% no_op, tungtung 98%, multi-kf MESH-bound también estructural. | MEMORY.md entry 2026-05-26 AR_blender-mesh-bound-structural-actions |
 | 3 | **`action.fcurves` DEPRECATED [Blender 5.1.2]** → AttributeError runtime. Usar `action.slots → layers → strips → channelbag(slot).fcurves`. Crítico para introspections / filter_animations. | MEMORY.md entry 2026-05-26 (ALTA verbatim "Crítico para futuras introspections") |
 | 4 | **Cycles `bpy.ops.object.bake(type='DIFFUSE')` bakea solo ACTIVE material slot per mesh + compila scene-wide al init** → broken Image Texture nodes (`image.has_data=False`) crash compile global ALL slots. Workaround parcial: `neutralize_broken_image_nodes()` pre-bake set `node.image=None` scene-wide (evita crash NO resuelve patchwork). Solution preferida: atlas paint pure-math (gotcha #5). | MEMORY.md entries 2026-05-26 (H1+H2 CONFIRMED, ALTA) |
 | 5 | **Atlas paint pure Python pixel paste + UV remap deterministic supera Cycles bake DIFFUSE** para multi-material meshes (multi-slot per mesh, broken texture refs). 4 attempts Cycles FAIL → swap paint PASS. Class-jump válido tras 2/3 attempts fallidos. | MEMORY.md entry 2026-05-26 AR_blender-pipeline-multitex-atlas-bake (ALTA verbatim) |
 | 6 | **`bpy.data.images.new(float_buffer=False)` uint8 RGBA reduce GLB ~7% sin pérdida visual SOLO BaseColor textures.** NO aplicar normal/roughness/metallic — mantener `float_buffer=True` (float32) para preservar precisión. | MEMORY.md entry 2026-05-26 AR_blender-atlas-uint8-size-reduction (MEDIA validated empirical) |
-| 7 | **Single offset constant insuficiente voladores heterogéneos** (bbox Z varying). Override CSV/dict per-name (`FLY_EXAMPLEASSETS_OVERRIDE = {"name": delta_z, ...}`) o manual list hardcoded `frozenset({...})` supera auto-detection heurística para batches `<10` modelos. | MEMORY.md entries 2026-05-26 AR_blender-fly-exampleassets-pivot-detection (MEDIA) |
+| 7 | **Single offset constant insuficiente voladores heterogéneos** (bbox Z varying). Override CSV/dict per-name (`FLY_BRAINROOTS_OVERRIDE = {"name": delta_z, ...}`) o manual list hardcoded `frozenset({...})` supera auto-detection heurística para batches `<10` modelos. | MEMORY.md entries 2026-05-26 AR_blender-fly-brainroots-pivot-detection (MEDIA) |
 
 ## Knowledge base lookup map
 
@@ -99,7 +106,7 @@ Si pregunta toca... → leer:
 | Atlas paint Y-axis / UV remap coherence / multi-tex | MEMORY.md entries 2026-05-26 atlas-bake (paste pure-math + Y-axis fix) |
 | Cycles bake multi-slot / scene-wide compile fail / neutralize | MEMORY.md entries 2026-05-26 H1+H2 CONFIRMED |
 | `bpy.data.images.new` float_buffer / uint8 vs float32 trade-off | MEMORY.md entry 2026-05-26 uint8-size-reduction |
-| Voladores pivot detection / single offset / manual list | MEMORY.md entries 2026-05-26 fly-exampleassets-pivot-detection |
+| Voladores pivot detection / single offset / manual list | MEMORY.md entries 2026-05-26 fly-brainroots-pivot-detection |
 | Background mode `temp_override` / no-GUI ops / `bpy.context` synth | docs.blender.org/api/current/bpy.context + `implementer-blender` skill section |
 | glTF exporter signatures (`bpy.ops.export_scene.gltf`) | docs.blender.org/api/current/bpy.ops.export_scene + `implementer-blender` skill |
 | `bmesh` edit mode batch geometry mutations | docs.blender.org/api/current/bmesh |
@@ -110,7 +117,7 @@ Si pregunta toca... → leer:
 
 ## Version-specific concerns [Blender 5.1.2 → future]
 
-KB local actualmente cubre solo `[Blender 5.1.2]` (<user> current Steam install `<blender_exe_path>`).
+KB local actualmente cubre solo `[Blender 5.1.2]` (<user> current Steam install `<blender_exe>`).
 
 **Respuesta política cuando caller pregunta sobre Blender ≠ 5.1.2**:
 
