@@ -20,7 +20,7 @@ Activación venv **prohibida**. Siempre path absoluto al python del `.venv`:
 |---|---|
 | Smoke test conexión DeepSeek | `<repo_root>\.venv\Scripts\python.exe <repo_root>\config\test_deepseek_connection.py` |
 | Smoke test wrapper | `<python> scripts\agents\<wrapper>.py --smoke-test` |
-| Install dep | `<repo_root>\.venv\Scripts\python.exe -m pip install <pkg>` (actualizar `.venv-info.md`) |
+| Install dep | `<repo_root>\.venv\Scripts\python.exe -m pip install <pkg>` |
 | Cargar `DEEPSEEK_API_KEY` per session | `$env:DEEPSEEK_API_KEY = [System.Environment]::GetEnvironmentVariable('DEEPSEEK_API_KEY','User')` |
 | Verificar encoding agents | `Get-ChildItem ".claude\agents\*.md" \| ForEach-Object { $b = [System.IO.File]::ReadAllBytes($_.FullName)[0..3]; "$($_.Name): $($b -join ' ')" }` (debe empezar `45 45 45 ...`, NUNCA `239 187 191`) |
 | Fix encoding BOM | Script `hooks/fix-bom-agents.ps1` (TODO crear) |
