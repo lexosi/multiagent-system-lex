@@ -1,4 +1,4 @@
-# multiagent-system
+# multiagent-system-lex
 
 [![CI](https://github.com/lexosi/multiagent-system-lex/actions/workflows/ci.yml/badge.svg)](https://github.com/lexosi/multiagent-system-lex/actions/workflows/ci.yml)
 
