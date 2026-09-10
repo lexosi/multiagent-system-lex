@@ -92,4 +92,4 @@ Entries `verse-uefn/MEMORY.md` que son UE Editor (no UEFN-specific) pendientes m
 - EditorAssetSubsystem
 - AssetRegistryHelpers
 
-Mantener en `verse-uefn/` solo: VFS mount per-project UEFN, allow-list validation UEFN, M_BoneAnimation/M_ExampleAnimation parents UEFN materials.
+Mantener en `verse-uefn/` solo: VFS mount per-project UEFN, allow-list validation UEFN, parents de materiales UEFN específicos del proyecto.

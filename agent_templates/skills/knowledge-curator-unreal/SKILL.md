@@ -94,7 +94,7 @@ Entries `verse-uefn/MEMORY.md` que son UE Editor (NO UEFN-specific) candidate mi
 Mantener en `verse-uefn/` solo entries UEFN-specific:
 - VFS mount per-project UEFN
 - UEFN allow-list validation
-- `M_BoneAnimation` / `M_ExampleAnimation` parents (UEFN materials específicos)
+- parents de materiales UEFN específicos del proyecto
 
 Migration workflow:
 1. Identify entry candidate en `verse-uefn/MEMORY.md`
