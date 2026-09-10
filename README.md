@@ -6,7 +6,7 @@
 
 ## What this is
 
-A personal, production multi-agent harness that coordinates debugging and feature work across multiple language/runtime domains (Verse/UEFN, Python, Rust, Java, TypeScript). The running system is **root-driven single-writer**: one main thread ("root") is the only physical invoker of subagents and the only writer to disk, with **19 agents** (13 Claude reasoners + 6 DeepSeek workers). This repository is a **sanitized snapshot** of 17 of those agent definitions plus the enforcement hooks and the compliance-eval findings.
+A personal, production multi-agent harness that coordinates debugging and feature work across multiple language/runtime domains (Verse/UEFN, Python, Rust, Java, TypeScript). One main thread ("root") is the only physical invoker of its **19 agents** — 13 Claude reasoners and 6 DeepSeek workers (one a storage-only wrapper). This repository is a **sanitized snapshot** of 17 of those agent definitions plus the enforcement hooks and the compliance-eval findings.
 
 ## Not a framework
 
@@ -78,9 +78,9 @@ from this repository.
 
 ## Design principles
 
-- **Single-writer, root-driven.** One main thread is the only invoker and the only writer; specialists reason and report, they don't act on disk. No subagent-to-subagent orchestration.
+- **Root-driven, single-invoker.** One main thread is the only invoker of subagents; each subagent writes only its own artifact, never shared state or another's territory. Read-only specialists reason and report without touching disk. No subagent-to-subagent orchestration.
 - **Enforcement by construction, not good faith.** Discipline lives in `PreToolUse` hooks (deny-by-default + one-shot sentinel override), because advisory rules were measured to produce no behavioral change.
-- **Clean-context auditors.** Outcome and process are judged by separate read-only auditors that never touched the work — the executor does not grade its own run.
+- **Clean-context auditors.** Outcome and process are judged by separate auditors that never touched the audited work and read only raw evidence; each writes only its own report. The executor does not grade its own run.
 - **Knowledge files as persistent context.** Curated learnings (`CLAUDE.md`, knowledge base) are the memory that survives across runs; the curator writes them under strict markers only.
 - **Model routing by cost.** Reasoning-heavy roles run on the high tier (Opus); high-volume grunt work is delegated to a cheaper secondary provider through thin wrappers.
 
