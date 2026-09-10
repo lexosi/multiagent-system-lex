@@ -67,3 +67,38 @@ class TestKbTiersStructure:
             for key in ("tier_1_always", "tier_2_bug_fix", "tier_3_project_init"):
                 assert key in tiers, f"{domain} missing {key}"
                 assert isinstance(tiers[key], list)
+
+
+class TestConfigConsistency:
+    """Static cross-config coherence (H-1): kb_tiers, paths.example and the
+    schema must agree on the domain set, and the template must declare the
+    mandatory language_to_domain block with only real targets."""
+
+    @staticmethod
+    def _example() -> dict:
+        return json.loads((REPO_ROOT / "config" / "paths.example.json").read_text())
+
+    def test_kb_tiers_domains_exist_in_paths_example(self):
+        kb = json.loads((REPO_ROOT / "config" / "kb_tiers.json").read_text())["domains"]
+        ex = self._example()["domains"]
+        missing = set(kb) - set(ex)
+        assert not missing, f"kb_tiers declares domains absent from paths.example: {sorted(missing)}"
+
+    def test_paths_example_declares_language_to_domain(self):
+        # CLAUDE.md invariant: the language->domain map is mandatory config shape.
+        ex = self._example()
+        assert "language_to_domain" in ex, "paths.example is missing the mandatory language_to_domain block"
+        assert ex["language_to_domain"], "language_to_domain block is empty"
+
+    def test_language_to_domain_targets_are_declared(self):
+        ex = self._example()
+        domains = set(ex.get("domains", {}))
+        l2d = ex.get("language_to_domain", {})
+        bad = {lang: target for lang, target in l2d.items() if target not in domains}
+        assert not bad, f"language_to_domain points to undeclared domains: {bad}"
+
+    def test_paths_example_domains_match_schema(self):
+        ex = self._example()["domains"]
+        schema = (REPO_ROOT / "config" / "paths-schema.md").read_text(encoding="utf-8")
+        missing = [d for d in ex if f"domains.{d}" not in schema]
+        assert not missing, f"domains in paths.example but not documented in paths-schema.md: {missing}"

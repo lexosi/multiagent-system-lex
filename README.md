@@ -99,14 +99,18 @@ CLAUDE.md          Project guidance loaded by Claude Code
 
 ## Paths to configure
 
-This snapshot does not run as-is. Replace these placeholders with your own locations, and create `config/paths.json` from `config/paths.example.json` (the runtime config is gitignored):
+This snapshot does not run as-is. Two separate things need real locations.
 
-| Placeholder / path | Meaning |
-|---|---|
-| `<uefn_root>` | Parent folder of your UEFN projects |
-| `<projects_root>` | Parent folder of your Blender/asset projects |
-| `<unreal_projects_root>` | Parent folder of your Unreal Editor projects |
-| `<repo_root>/...` | Absolute path to **this** repo (used in hook commands) |
-| `config/paths.json` | Runtime path config — create from `config/paths.example.json` |
+**1. Placeholder tokens** — substituted into hook commands, agent templates and skills. These are **not** keys in `config/paths.json`; they are literal text tokens the docs and hooks carry:
+
+| Token | Meaning | Used in |
+|---|---|---|
+| `<repo_root>` | Absolute path to **this** repo | hook commands |
+| `<knowledge_root>` | Root of your knowledge base | agent templates, `paths-schema.md` |
+| `<uefn_root>` | Parent folder of your UEFN projects | `pretooluse-guard-protected-files.ps1` |
+| `<projects_root>` | Parent folder of your Blender/asset projects | `session-start-substitute-paths.ps1`, blender skills |
+| `<unreal_projects_root>` | Parent folder of your Unreal Editor projects | unreal skills |
+
+**2. Runtime path config** — `config/paths.json`, created from `config/paths.example.json` (gitignored at runtime). Its keys are a separate namespace, documented in [`config/paths-schema.md`](config/paths-schema.md) — don't look for the tokens above as keys there.
 
 Folder-name tokens inside hook regexes (e.g. `UEFNProjects`) are generic examples — adjust them to your real directories. Per-machine overrides are supported via the `MULTIAGENT_PATHS_CONFIG` environment variable.

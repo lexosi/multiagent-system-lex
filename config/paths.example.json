@@ -1,5 +1,7 @@
 {
+  "_comment": "Template for the gitignored runtime config/paths.json. Mirrors its real shape; replace every <...> with an absolute path. Tokens like <knowledge_base> and <multiagent_root> refer to the sibling keys above. NOTE: the 'uefn-material' and 'unreal-material' domains serve the specialist-material agent, which is NOT part of the public snapshot -- they are kept so the template describes the real shape.",
   "knowledge_base": "<absolute path to your knowledge base, e.g. C:\\dev\\knowledge>",
+  "config_dir": "<absolute path to this repo's config dir, e.g. C:\\dev\\multiagent-system\\config>",
   "multiagent_root": "<absolute path to multiagent-system, e.g. C:\\dev\\multiagent-system>",
   "uefn_projects_root": "<absolute path to your UEFN projects parent folder>",
   "uefn_output_log": "%LOCALAPPDATA%\\FortniteGame\\Saved\\Logs",
@@ -9,6 +11,42 @@
     "rust": "<knowledge_base>\\rust",
     "java": "<knowledge_base>\\java",
     "typescript-bun": "<knowledge_base>\\typescript-bun",
-    "cross-language": "<knowledge_base>\\cross-language"
+    "cross-language": "<knowledge_base>\\cross-language",
+    "agent-system": "<multiagent_root>\\knowledge",
+    "blender-python": "<knowledge_base>\\blender-python",
+    "unreal-python-editor": "<knowledge_base>\\unreal-python-editor",
+    "uefn-material": "<knowledge_base>\\uefn-material",
+    "unreal-material": "<knowledge_base>\\unreal-material"
+  },
+  "language_to_domain": {
+    "verse": "verse-uefn",
+    "python": "python",
+    "rust": "rust",
+    "java": "java",
+    "typescript-bun": "typescript-bun",
+    "typescript": "typescript-bun",
+    "bun": "typescript-bun",
+    "mixed": "cross-language",
+    "blender": "blender-python",
+    "blender-python": "blender-python",
+    "unreal": "unreal-python-editor",
+    "unreal-python-editor": "unreal-python-editor",
+    "material": "uefn-material",
+    "uefn-material": "uefn-material",
+    "unreal-material": "unreal-material"
+  },
+  "docs": {
+    "agent_runs": "<multiagent_root>\\docs\\agent_runs",
+    "model_reviews": "<multiagent_root>\\docs\\model_reviews",
+    "tech_debt": "<multiagent_root>\\docs\\tech_debt"
+  },
+  "review_cadences": {
+    "model_allocator_hours": "72"
+  },
+  "state_files": {
+    "last_model_review": "<multiagent_root>\\.last_model_review",
+    "curator_pending": "<multiagent_root>\\.curator_pending",
+    "placeholders_state": "<multiagent_root>\\.placeholders_state.json",
+    "metrics_dir": "<multiagent_root>\\.metrics"
   }
 }
