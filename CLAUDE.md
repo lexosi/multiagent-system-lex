@@ -100,7 +100,12 @@ Debug hooks: `$env:MULTIAGENT_HOOKS_DEBUG = "1"` → log a `hooks\.debug.log`.
 
 ### Archivos protegidos
 
-- `CLAUDE.md` (cualquier proyecto): **solo `knowledge-curator`** edita, y **solo** entre `<!-- AUTO-CURATED:START -->` / `<!-- AUTO-CURATED:END -->`. Si markers no existen → append al final. Nunca crear CLAUDE.md (lo hace `/init`).
+- **`CLAUDE.md` — tres zonas, tres dueños:**
+  1. **Entre markers** `<!-- AUTO-CURATED:START -->` … `<!-- AUTO-CURATED:END -->` = conocimiento curado. **Solo `knowledge-curator`**, y solo por `Edit` acotado a esta zona. Enforce: hook sobre `Edit` → si el target cae dentro de los markers y `agent_type != "knowledge-curator"` → deny. (`Write` no se evalúa aquí: cae siempre en la zona 3.)
+  2. **Fuera de markers** (roster, tabla de hooks, invariantes, comandos, arquitectura) = doctrina del sistema. La edita **quien cambia el sistema** — hoy `root` por `Edit` directo. Ese root-direct es **acción directa declarada** (banner de visibilidad ROOT EJECUTANDO + bloque `SCOPE`/`ANTI-SCOPE`, gate <user> si sale del plan), NO vía libre ni rutina de escritura de fichero versionado. NO es territorio de `knowledge-curator`. Enforce: permitido; ninguna regla lo bloquea. Hueco declarado: esta zona contiene los propios invariantes — incluido este —; nada impide hoy que un agente reescriba las reglas que lo gobiernan.
+  3. **El fichero entero por `Write`** = deny absoluto **para todos, sin excepción de rol** (incluido `knowledge-curator`: el curador escribe por `Edit`, nunca por `Write`). Un `Write` sobrescribe markers y doctrina. Enforce: hook sobre `Write` a CLAUDE.md → deny.
+
+  Alcance real del guard hoy: solo resuelve el `CLAUDE.md` **de usuario** (`~/.claude/CLAUDE.md`), zona 1, por una única ruta fija. La cobertura del `CLAUDE.md` **de proyecto** está pendiente — el guard no lo mira. Nunca crear CLAUDE.md: lo hace `/init`.
 - `Content/Verse/Core/*` (singletons proyecto UEFN): ASK <user> antes.
 - Persistence Verse: ASK antes.
 - `.git/`: bloqueado por hook.
