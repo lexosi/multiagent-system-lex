@@ -88,6 +88,16 @@
             "statusMessage": "Capturing skills token tax..."
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/stop-anti-memory-verify.ps1\"",
+            "timeout": 30,
+            "statusMessage": "Anti-memory verification gate check..."
+          }
+        ]
       }
     ],
     "PreToolUse": [
@@ -161,6 +171,17 @@
             "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/pretooluse-capture-task-invocation.ps1\"",
             "timeout": 10,
             "statusMessage": "Capturing task invocation (Fase 5.1)..."
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"<repo_root>/hooks/pretooluse-block-root-kb-write.ps1\"",
+            "timeout": 10,
+            "statusMessage": "Root KB-write hard-block check..."
           }
         ]
       }
