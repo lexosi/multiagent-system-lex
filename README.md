@@ -51,6 +51,21 @@ The enforcement claim is measured, not asserted. Advisory role-discipline rules 
 
 The **one-shot flow is the design, not a failure mode**: an unauthorized root write is denied, denied again on retry, and only proceeds after root consumes an explicit, TTL-bounded sentinel override — each step logged. `0 unauthorized writes` is an invariant by construction (the hook denies a guarded territory unless the caller is its owning subagent or consumes a valid one-shot sentinel), corroborated by the logs.
 
+**Where the logs are.** The enforcement logs behind these numbers
+(`.deny.log`, `.override.log`) are an operating record of real work on
+third-party projects, so they are not published here. A harness that shipped
+with its author's own run history would also be carrying luggage nobody else
+needs.
+
+They are read by `eval/run_eval.py` in the production system, which derives
+the claim above by counting entries rather than restating a number written by
+hand. That eval is not part of this snapshot either: it is meaningless without
+the logs it reads.
+
+Treat the figures above as a measurement taken on the author's own system over
+the stated window, with its method disclosed — not as one you can re-derive
+from this repository.
+
 ## How to read this repo
 
 | Path | What it holds |
