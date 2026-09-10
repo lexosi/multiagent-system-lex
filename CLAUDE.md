@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Sistema multi-agente para <user> (Windows 11 + PowerShell admin). Coordina debugging/feature work en proyectos Verse/UEFN, Python, Rust, Java, TS+Bun. Governance cross-agente en `briefs/ANTI_SYCOPHANCY_ADDENDUM.md` + `briefs/ANTI_MEMORY_VERIFICATION.md` + `briefs/KB_SOURCE_HIERARCHY.md`. **Léelos antes de tocar arquitectura.**
 
-Stack: Claude Code subagents nativos (no Agent Teams) + 4 grunt-work Python wrappers que llaman DeepSeek API directa vía OpenAI SDK con `base_url=https://api.deepseek.com`. Híbrido necesario porque Claude Code 2.1.x no soporta routing per-agent a providers distintos.
+Stack: Claude Code subagents nativos (no Agent Teams) + 5 grunt-work Python wrappers que llaman DeepSeek API directa vía OpenAI SDK con `base_url=https://api.deepseek.com` (+ 1 wrapper de storage puro, `hypothesis_tracker`, que NO llama DeepSeek). Híbrido necesario porque Claude Code 2.1.x no soporta routing per-agent a providers distintos.
 
 ## Comandos comunes
 
@@ -65,13 +65,23 @@ Cada ticket → `docs/agent_runs/AR_<YYYY-MM-DD>_<slug>/`. Colisión → sufijo 
 | `closed-failed` | `final_report.md` (factual) + `outcome_audit_report.md` verdict FAILED |
 | `aborted` | `_ABORTED.md` marker |
 
-### Hooks (3)
+### Hooks (11)
 
-| Hook | Trigger | Función |
-|---|---|---|
-| `session-start-substitute-paths.ps1` | SessionStart (startup/resume/clear/compact) | Regenera agents desde templates con paths sustituidos. Target: **`<repo_root>\.claude\agents\`** (project-level). Encoding: **UTF-8 sin BOM**. Idempotente vía `.placeholders_state.json` (SHA256). |
-| `stop-knowledge-curator.ps1` | Stop (cada turn) | Detecta ARs cerrados (final_report.md reciente sin curator_report.md), registra en `.curator_pending`. Next session lo consume. Exit 0 SIEMPRE. |
-| `pretooluse-guard-protected-files.ps1` | PreToolUse `Edit\|Write` | Bloquea writes a `.git/`, persistence Verse (`Content\Verse\Core\*Persistence*.verse`), `CLAUDE.md` fuera de markers `<!-- AUTO-CURATED:START/END -->`. |
+11 ficheros `.ps1` en `hooks/`, los **11 cableados** en `.claude/settings.json` (0 sin cablear). La columna Cableado distingue los que `settings.json` activa de los que solo existen como fichero.
+
+| Hook | Trigger | Cableado | Función |
+|---|---|---|---|
+| `session-start-substitute-paths.ps1` | SessionStart (startup/resume/clear/compact) | Sí | Regenera agents desde templates con paths sustituidos. Target: **`<repo_root>\.claude\agents\`** (project-level). Encoding: **UTF-8 sin BOM**. Idempotente vía `.placeholders_state.json` (SHA256). También inyecta `.curator_pending` + `.auditor_pending` en additionalContext. |
+| `userpromptsubmit-visibility-reminder.ps1` | UserPromptSubmit | Sí | Inyecta el bloque de visibility obligatorio + banner root-active cada turn. |
+| `stop-knowledge-curator.ps1` | Stop (cada turn) | Sí | Detecta ARs cerrados (final_report.md reciente sin curator_report.md), registra en `.curator_pending`. Exit 0 SIEMPRE. |
+| `stop-no-auditor.ps1` | Stop (cada turn) | Sí | Detecta ARs sin `outcome_audit_report.md`/`process_audit_report.md` (legacy `root_audit_report.md` cuenta como process), escribe `.auditor_pending`. Exit 0 SIEMPRE. |
+| `stop-capture-skills-token-tax.ps1` | Stop (cada turn) | Sí | Instrumentación token-tax: skills + subagents invocados por turn. Exit 0 SIEMPRE. |
+| `stop-anti-memory-verify.ps1` | Stop (cada turn) | Sí | Bloquea (decision=block) la firma "captura pegada + ni Read ni delegada" para forzar verificación fresca (anti-memoria). |
+| `pretooluse-guard-protected-files.ps1` | PreToolUse `Edit\|Write\|Bash\|PowerShell` | Sí | Reglas A-E: bloquea `.git/`, persistence Verse (`Content\Verse\Core\*Persistence*.verse`), `CLAUDE.md` **de usuario** fuera de markers `<!-- AUTO-CURATED:START/END -->`, `git *` bajo `<uefn_root>\*`, y `outcome_/process_audit_report.md` por `agent_type` (anti-self-grading). |
+| `pretooluse-verse-kb-advisory.ps1` | PreToolUse `Edit\|Write` | Sí | Advisory (NUNCA bloquea): al tocar código Verse recuerda consultar la KB. |
+| `pretooluse-block-scope-territory.ps1` | PreToolUse `Edit\|Write` | Sí | Hard-block scope-territory role-discipline por `agent_type` + override sentinel-file root one-shot TTL 1h. |
+| `pretooluse-capture-task-invocation.ps1` | PreToolUse `Agent\|Task` | Sí | Captura invocaciones de subagent → `_pending_turn_tasks.jsonl` (correlación token-tax). |
+| `pretooluse-block-root-kb-write.ps1` | PreToolUse `Write\|Edit` | Sí | Hard-block escrituras a la KB (`<knowledge_root>\*`) por root/no-curator, `agent_type`-aware + sentinel one-shot (anillo C1/C2). |
 
 Debug hooks: `$env:MULTIAGENT_HOOKS_DEBUG = "1"` → log a `hooks\.debug.log`.
 
