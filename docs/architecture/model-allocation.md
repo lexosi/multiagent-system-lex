@@ -5,6 +5,8 @@
 > Futuro: auto-generar este doc desde JSON (defer post-B6).
 >
 > Contenido tabla abajo preservado por historia decisión B1.
+>
+> **Nota de rename (histórico).** Todas las referencias de este doc a `root-discipline-auditor` / `root_discipline_auditor` / `deepseek_root_discipline_auditor.py` son **previas al rename**: ese auditor es hoy `process-auditor` (`agent_templates/process-auditor.md`). El template `root-discipline-auditor.md` y el wrapper `deepseek_root_discipline_auditor.py` ya no existen. El texto de abajo se conserva como registro de la decisión B1, no describe el estado vigente.
 
 ---
 
