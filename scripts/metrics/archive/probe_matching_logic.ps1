@@ -6,9 +6,9 @@ $ErrorActionPreference = "Continue"
 
 $PhrasesPath = "<repo_root>\scripts\metrics\distinctive_phrases.json"
 # NOTE: SampleJsonl points to a specific historical dev session (pre-cutover 2026-05-29).
-# Path obsolete post-cutover (F--multiagent-system-dev deleted). Update before re-run with a
-# current session JSONL from %USERPROFILE%\.claude\projects\F--multiagent-system\<sid>\subagents\.
-$SampleJsonl = "$env:USERPROFILE\.claude\projects\F--multiagent-system-dev\1a8f2e48-06e2-4ef2-a866-5d14d474b197\subagents\agent-a0044dd045772e335.jsonl"
+# Path obsolete post-cutover (<repo>-dev deleted). Update before re-run with a
+# current session JSONL from %USERPROFILE%\.claude\projects\<repo>\<session_id>\subagents\.
+$SampleJsonl = "$env:USERPROFILE\.claude\projects\<repo>-dev\<session_id>\subagents\agent-<HEX17>.jsonl"
 $TargetSkill = "planner-uefn"
 
 Write-Output "===== Fase 5.1b matching probe ====="
@@ -92,9 +92,9 @@ Write-Output ""
 
 # --- H4: Path resolution ---
 Write-Output "=== H4: Path resolution test ==="
-$ProjectsBase = Join-Path $env:USERPROFILE ".claude\projects\F--multiagent-system"
-$session = "1a8f2e48-06e2-4ef2-a866-5d14d474b197"
-$agentId = "a0044dd045772e335"
+$ProjectsBase = Join-Path $env:USERPROFILE ".claude\projects\<repo>"
+$session = "<session_id>"
+$agentId = "<HEX17>"
 $path_test = Join-Path (Join-Path (Join-Path $ProjectsBase $session) "subagents") "agent-$agentId.jsonl"
 Write-Output "  constructed path: $path_test"
 Write-Output "  Test-Path: $(Test-Path -LiteralPath $path_test)"

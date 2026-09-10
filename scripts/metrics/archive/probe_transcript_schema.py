@@ -20,7 +20,7 @@ from pathlib import Path
 from collections import Counter
 
 PROJECTS_DIR = Path(os.environ.get("USERPROFILE", os.environ.get("HOME"))) / ".claude" / "projects"
-DEFAULT_PROJECT = "F--multiagent-system"
+DEFAULT_PROJECT = "<repo>"
 
 def discover_session_id(project_dir: Path) -> str | None:
     """Find most recent session in project dir."""
