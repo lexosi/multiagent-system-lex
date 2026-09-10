@@ -165,8 +165,9 @@ if ([string]::IsNullOrWhiteSpace($filePath)) { Emit-PassThrough }
 $norm = ($filePath -replace '\\', '/').ToLower().Trim()
 
 # --- 6. NEVER-block check PRIMERO (anti lock-out) ---
+# NOTE: '\.verse$' stays global (a .verse file is legit anywhere); safe only while no managed territory uses .verse files - if one ever did, this fast-allow would silently win over its deny.
 if ($norm -match '\.verse$' -or
-    $norm -match 'content/verse/' -or
+    $norm -match '(^|/)content/verse/' -or
     $norm -match 'docs/agent_runs/ar_[^/]+/final_report\.md$' -or
     $norm -match $CfgPattern -or
     $norm -match $HookPattern) {

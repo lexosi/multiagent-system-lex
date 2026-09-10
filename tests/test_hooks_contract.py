@@ -157,6 +157,26 @@ def test_scope_discriminates():
     assert root_dec != impl_dec  # not both trivially passing
 
 
+@_skip
+def test_scope_fastallow_bypass_denied():
+    """E-4: a path whose PREFIX contains 'content/verse' as an unanchored
+    substring (evilcontent/verse) AND whose suffix is a managed territory
+    (agent_templates/*.md) must still DENY for root. The unanchored NEVER-block
+    clause must not fast-allow it. RED until line 169 is anchored to a segment
+    boundary."""
+    bypass = str(REPO_ROOT / "evilcontent" / "verse" / "agent_templates" / "implementer.md")
+    assert decision_of(run_hook(HOOK_SCOPE, _edit(bypass, None))) == "deny"
+
+
+@_skip
+def test_scope_real_verse_allowed():
+    """Guards the segment anchor from over-narrowing: a real UEFN project
+    .verse path (Content/Verse/*.verse) must still ALLOW via NEVER-block, so
+    nobody anchors these clauses further and starts blocking legit Verse work."""
+    real_verse = "F:\\Noobs\\MyProj\\Content\\Verse\\game.verse"
+    assert decision_of(run_hook(HOOK_SCOPE, _edit(real_verse, None))) == "allow"
+
+
 # --- script mode: run all + prove the forced reds are really red ---
 def _main():
     if PWSH is None:
@@ -183,6 +203,8 @@ def _main():
     g("scope root -> DENY", test_scope_root_denied)
     g("scope implementer -> ALLOW", test_scope_implementer_allowed)
     g("scope discriminates (deny != allow)", test_scope_discriminates)
+    g("scope fast-allow bypass -> DENY", test_scope_fastallow_bypass_denied)
+    g("scope real .verse -> ALLOW", test_scope_real_verse_allowed)
 
     # Forced reds (technique A): wrong expectations MUST fail. If any of these
     # does NOT fail, the assertion is inert (e.g. reading exit code) -> suite lies.
