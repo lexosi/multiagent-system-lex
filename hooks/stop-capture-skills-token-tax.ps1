@@ -213,7 +213,10 @@ if (Test-Path -LiteralPath $PendingFile) {
 # (step 7+) computa false-positive como: loaded - cited.
 $PerSkillUsage = @()
 $DistinctivePhrasesPath = Join-Path $RepoRoot "scripts\metrics\distinctive_phrases.json"
-$ProjectsBase = Join-Path $env:USERPROFILE ".claude\projects\F--multiagent-system"
+# CC munges the repo abs path (: \ / -> -) into the projects dir name. Derive it
+# from $RepoRoot instead of hardcoding, so the capture tracks whatever repo runs it.
+$ProjectDirName = ($RepoRoot -replace '[:\\/]', '-')
+$ProjectsBase = Join-Path $env:USERPROFILE (Join-Path ".claude\projects" $ProjectDirName)
 
 $distinctivePhrases = $null
 if (Test-Path -LiteralPath $DistinctivePhrasesPath) {
