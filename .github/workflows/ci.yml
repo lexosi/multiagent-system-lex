@@ -45,5 +45,11 @@ jobs:
           print("all config JSON valid")
           PY
 
+      - name: Verify PowerShell Core present
+        # The hook-contract tests SKIP when pwsh is absent. Assert it up front so a
+        # runner without PowerShell fails loudly here instead of silently skipping
+        # the only tests that exercise the enforcement hooks.
+        run: pwsh -Version
+
       - name: Unit tests
         run: pytest tests/ -q
