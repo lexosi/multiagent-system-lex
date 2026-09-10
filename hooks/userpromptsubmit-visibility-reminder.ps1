@@ -12,7 +12,7 @@
     Resuelve dolor "no veo que agente trabaja" detectado 2026-05-18.
 
     El hook NO bloquea ni denega — solo inyecta recordatorio.
-    Si root omite el bloque, root-discipline-auditor lo flag post-AR.
+    Si root omite el bloque, process-auditor lo flag post-AR.
 
 .NOTES
     Trigger: UserPromptSubmit
@@ -90,7 +90,7 @@ CAP N2 EXTENSION (since 2026-05-18): si root usa Grep como pre-check de scope cl
 
 Si archivos_leidos_completos < archivos donde grep dio hits -> confianza=low -> ESCALAR <user> antes de proseguir.
 
-Omision 2+ turns consecutivos mismo AR -> root-discipline-auditor flag violacion.
+Omision 2+ turns consecutivos mismo AR -> process-auditor flag violacion.
 "@
 
 $payload = @{
