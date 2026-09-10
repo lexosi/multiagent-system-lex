@@ -19,6 +19,12 @@
             * old_string integro dentro de markers -> ALLOW
       D. Bash/PowerShell con `git *` apuntando a proyectos UEFN (<uefn_root>\*) -> BLOCK
          Proyectos UEFN usan Push Changes interno + save manual <user>. Cero git.
+      E. Audit reports independientes (anti-falsificacion, 1:1 rol->archivo):
+         - outcome_audit_report.md -> solo lo escribe agent_type "outcome-auditor"
+         - process_audit_report.md -> solo lo escribe agent_type "process-auditor"
+         - cualquier otro caller (root = agent_type ausente -> <unknown>) -> BLOCK
+         Impide self-grading: root NO fabrica su propio verdict de cierre.
+         Legacy root_audit_report.md difunto (sin regla, backward-compat lectura only).
 
 .NOTES
     Trigger: PreToolUse matcher "Edit|Write|Bash|PowerShell"
@@ -153,6 +159,27 @@ if ($absPath -match '\\\.git\\') {
 # --- Regla B: Persistence Verse files ---
 if ($absPath -match '(?i)Content\\Verse\\Core\\[^\\]*Persistence[^\\]*\.verse$') {
     Emit-Deny "Persistence Verse files require explicit Version bump declared in plan.md. Phase 4 does not yet auto-detect approved bumps. Escalate to <user> or update plan.md and request root approval. Path: $absPath"
+}
+
+# --- Regla E: anti-falsificacion audit reports (1:1 rol->archivo) ---
+# Cada audit report independiente solo lo escribe SU auditor. Impide que root
+# (agent_type ausente -> <unknown>) u otro subagent fabrique/edite el verdict.
+# agent_type confirmado empirico en el sistema de produccion: "outcome-auditor" / "process-auditor";
+# root = campo ausente. Mismo patron de lectura que block-scope-territory.ps1.
+# Legacy root_audit_report.md: SIN regla (difunto, backward-compat lectura only).
+$agentTypeE = $payload.agent_type
+if (-not $agentTypeE) { $agentTypeE = "<unknown>" }   # root = agent_type ausente
+$fileNameE = [System.IO.Path]::GetFileName($absPath)
+
+if ($fileNameE -ieq "outcome_audit_report.md") {
+    if ($agentTypeE -ne "outcome-auditor") {
+        Emit-Deny "outcome_audit_report.md solo lo escribe el subagent 'outcome-auditor' (verdict de RESULTADO independiente). Caller='$agentTypeE' (root/ausente=<unknown>). Self-grading bloqueado: root NO fabrica su propio verdict. Path: $absPath"
+    }
+}
+elseif ($fileNameE -ieq "process_audit_report.md") {
+    if ($agentTypeE -ne "process-auditor") {
+        Emit-Deny "process_audit_report.md solo lo escribe el subagent 'process-auditor' (verdict de DISCIPLINA de rol independiente). Caller='$agentTypeE' (root/ausente=<unknown>). Self-grading bloqueado: root NO fabrica su propio audit. Path: $absPath"
+    }
 }
 
 # --- Regla C: CLAUDE.md user-global ---
