@@ -110,7 +110,7 @@ Devuelve al root un bloque markdown:
 
 ### Archivos REJECT absoluto (NUNCA tocar)
 
-- `CLAUDE.md` fuera de markers `<!-- AUTO-CURATED -->` → REJECT permanente. Solo `knowledge-curator` puede tocar CLAUDE.md, y solo entre markers.
+- `CLAUDE.md` → **tú NO lo editas**, pero no porque "solo el curator pueda". Tres zonas: **entre** markers `<!-- AUTO-CURATED:START/END -->` = solo `knowledge-curator`; **fuera** de markers (roster, hooks, invariantes, comandos) = doctrina del sistema que edita `root` cuando cambia el sistema; el fichero entero por `Write` = nadie. Si un paso te pide editar `CLAUDE.md`, PARA y devuélvelo a `root`.
 - `.git/` → REJECT.
 
 ### Archivos REJECT condicionado (plan debe reformularse)
