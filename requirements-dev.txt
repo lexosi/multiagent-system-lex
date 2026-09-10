@@ -1,0 +1,10 @@
+# Development / test dependencies.
+#
+# REFERENCE ONLY -- not an install contract (see requirements.txt header). Versions
+# are those OBSERVED on the dev machine (Python 3.14.4), not pinned or verified.
+#
+# pytest -- the test suite (tests/*). ruff -- linter (config in ruff.toml).
+# Enforced together with requirements.txt by tests/test_dependency_manifest.py.
+
+pytest>=9.0.3
+ruff>=0.16.6

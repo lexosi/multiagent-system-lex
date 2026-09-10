@@ -1,0 +1,13 @@
+# Runtime dependencies of the DeepSeek Python wrappers (scripts/agents/*.py).
+#
+# REFERENCE ONLY -- this is NOT an install contract. This repo is not installable
+# by design; these packages are what the wrappers import at module level, and the
+# versions below are those OBSERVED on the dev machine (Python 3.14.4), not
+# independently pinned or verified. Floors (>=) express "known to work here", not
+# "validated". Installing them does not make the repo run.
+#
+# The set is enforced by tests/test_dependency_manifest.py: every third-party
+# module-level import in the tree must appear here or in requirements-dev.txt.
+
+openai>=2.36.0
+python-dotenv>=1.2.2
