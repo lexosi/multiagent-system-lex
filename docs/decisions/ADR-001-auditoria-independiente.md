@@ -4,7 +4,7 @@
 - **Fecha:** 2026-06-16
 - **Ámbito:** Ciclo de cierre de un Agent Run (AR); rol del `root`; agentes auditores.
 
-> **Nota de procedencia.** Este es el primer ADR de *este repositorio público*. No es la primera decisión del sistema: el sistema acumula 123 ARs productivos con audit trail completo, y la serie de ADRs internos vive en otros repos del proyecto. Este ADR se extrae y adapta para compartir en abierto **precisamente porque no contiene información de proyectos propios** — documenta una decisión de arquitectura del orquestador, no datos de ningún cliente o build. La numeración (`ADR-001`) es secuencial *por repositorio*, según la convención estándar de ADRs.
+> **Nota de procedencia.** Este es el primer ADR de *este repositorio público*. No es la primera decisión del sistema: el sistema acumula 123 ARs productivos (a fecha 2026-06-16) con audit trail completo, y la serie de ADRs internos vive en otros repos del proyecto. Este ADR se extrae y adapta para compartir en abierto **precisamente porque no contiene información de proyectos propios** — documenta una decisión de arquitectura del orquestador, no datos de ningún cliente o build. La numeración (`ADR-001`) es secuencial *por repositorio*, según la convención estándar de ADRs.
 
 ---
 

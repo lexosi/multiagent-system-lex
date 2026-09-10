@@ -10,7 +10,7 @@ Decisiones de arquitectura del sistema multiagente, documentadas y curadas.
 
 ## Procedencia
 
-Esta serie pública es un **subconjunto curado**. El sistema acumula 123 ARs productivos (Agent Runs) con audit trail completo y una serie de ADRs internos que vive en otros repositorios del proyecto. Aquí se publican solo las decisiones que **no contienen información de proyectos propios** — son decisiones de arquitectura del orquestador, no datos de clientes ni de builds. Por eso `ADR-001` aquí no implica "primera decisión del sistema", sino "primera decisión documentada en este repositorio público".
+Esta serie pública es un **subconjunto curado**. El sistema acumula 123 ARs productivos (Agent Runs, a fecha 2026-06-16) con audit trail completo y una serie de ADRs internos que vive en otros repositorios del proyecto. Aquí se publican solo las decisiones que **no contienen información de proyectos propios** — son decisiones de arquitectura del orquestador, no datos de clientes ni de builds. Por eso `ADR-001` aquí no implica "primera decisión del sistema", sino "primera decisión documentada en este repositorio público".
 
 ## Índice
 
