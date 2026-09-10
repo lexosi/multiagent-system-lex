@@ -17,6 +17,11 @@
             * markers AUTO-CURATED no existen -> BLOCK
             * old_string cae fuera o cruza markers -> BLOCK
             * old_string integro dentro de markers -> ALLOW
+      C-proyecto. CLAUDE.md de proyecto (con markers AUTO-CURATED, no user, no "audit"):
+         - Write -> BLOCK (zona 3: sobrescribe markers, incluido knowledge-curator)
+         - Edit dentro de markers -> ALLOW solo knowledge-curator (zona 1, curada)
+         - Edit fuera/cruza markers -> ALLOW (zona 2, doctrina del sistema = root)
+         - sin markers / fichero no existe -> passthrough (no lock-out)
       D. Bash/PowerShell con `git *` apuntando a proyectos UEFN (<uefn_root>\*) -> BLOCK
          Proyectos UEFN usan Push Changes interno + save manual <user>. Cero git.
       E. Audit reports independientes (anti-falsificacion, 1:1 rol->archivo):
@@ -79,7 +84,9 @@ function Emit-Allow() {
 # --- 1. Leer stdin ---
 $stdinRaw = ""
 try {
-    $stdinRaw = [Console]::In.ReadToEnd()
+    # Force UTF-8 on raw stdin: the caller (Claude Code) pipes UTF-8 JSON, but the
+    # ambient console codepage would mangle non-ASCII old_string -> false DENY. Fixes C-usuario AND C-proyecto.
+    $stdinRaw = ([System.IO.StreamReader]::new([Console]::OpenStandardInput(), [System.Text.Encoding]::UTF8)).ReadToEnd()
 } catch {
     Write-DebugLog "stdin read failed: $($_.Exception.Message); ALLOW (fail-open)"
     Emit-Allow
@@ -246,6 +253,86 @@ if ($isClaudeMd) {
 
         Write-DebugLog "CLAUDE.md Edit within markers: ALLOW"
         Emit-Allow
+    }
+}
+
+# --- Regla C-proyecto: CLAUDE.md de proyecto (con zona AUTO-CURATED) ---
+# Distinta de Regla C-usuario (arriba, hardcode user path). Aqui: cualquier
+# CLAUDE.md que NO sea el de usuario, exista, tenga markers bien formados y NO
+# sea un clon/fork de auditoria. DIFERENCIA CLAVE vs C-usuario: la zona FUERA de
+# markers (zona 2 = doctrina del sistema) se PERMITE (trabajo legitimo de root),
+# mientras C-usuario la DENIEGA. Sin markers -> passthrough (mata lock-out).
+$fileNameP = [System.IO.Path]::GetFileName($absPath)
+if (($fileNameP -ieq "CLAUDE.md") -and (-not $isClaudeMd) -and (-not $absPath.ToLower().Contains("audit")) -and (Test-Path -LiteralPath $absPath)) {
+
+    $contentP = $null
+    try {
+        $contentP = Get-Content -LiteralPath $absPath -Raw -Encoding UTF8
+    } catch {
+        Write-DebugLog "project CLAUDE.md read failed: $($_.Exception.Message); ALLOW (fail-open)"
+        Emit-Allow
+    }
+
+    # Re-declara localmente los literales de marker (scope C-usuario no alcanza aqui).
+    $startMarker = '<!-- AUTO-CURATED:START -->'
+    $endMarker   = '<!-- AUTO-CURATED:END -->'
+    # Anchored to line-start on purpose: a CLAUDE.md that DOCUMENTS its own marker
+    # syntax in prose (as this project's does) defeats first-occurrence IndexOf. Do NOT simplify to IndexOf.
+    $mStartP = [regex]::Match($contentP, '(?m)^<!-- AUTO-CURATED:START -->')
+    $mEndP   = [regex]::Match($contentP, '(?m)^<!-- AUTO-CURATED:END -->')
+
+    # Solo enforcamos con markers bien formados. Markerless -> passthrough (no lock-out).
+    if ($mStartP.Success -and $mEndP.Success -and $mEndP.Index -gt $mStartP.Index) {
+        $startIdxP = $mStartP.Index
+        $endIdxP   = $mEndP.Index
+
+        $agentTypeP = $payload.agent_type
+        if (-not $agentTypeP) { $agentTypeP = "<unknown>" }   # root = agent_type ausente
+
+        if ($toolName -eq "Write") {
+            # Zona 3: Write sobrescribe markers -> deny para TODOS, incluido knowledge-curator.
+            Emit-Deny "Write to project CLAUDE.md overwrites the entire file including AUTO-CURATED markers (zona 3: deny for everyone, knowledge-curator included). Use Edit restricted to the marker-bounded zone (<!-- AUTO-CURATED:START --> ... <!-- AUTO-CURATED:END -->). Path: $absPath"
+        }
+
+        if ($toolName -eq "Edit") {
+            $oldStringP = $toolInput.old_string
+            $newStringP = $toolInput.new_string
+
+            if ($null -eq $oldStringP) {
+                Emit-Deny "Project CLAUDE.md Edit missing old_string parameter. Path: $absPath"
+            }
+
+            $oldIdxP = $contentP.IndexOf($oldStringP)
+            if ($oldIdxP -lt 0) {
+                Emit-Deny "Project CLAUDE.md: old_string not found in file (likely agent bug). Verify the exact content before retry. Path: $absPath"
+            }
+            $oldEndIdxP = $oldIdxP + $oldStringP.Length
+
+            $minAllowedP = $startIdxP + $startMarker.Length
+            $maxAllowedP = $endIdxP
+
+            # new_string no puede introducir marker tokens (intento de extender/mover la
+            # zona curada). Aplica a AMBAS zonas -> antes del branching zona 1 / zona 2.
+            if ($newStringP -and ($newStringP.Contains($startMarker) -or $newStringP.Contains($endMarker))) {
+                Emit-Deny "Project CLAUDE.md Edit attempts to write AUTO-CURATED marker tokens in new_string (attempt to extend/move the curated zone). Path: $absPath"
+            }
+
+            if ($oldIdxP -ge $minAllowedP -and $oldEndIdxP -le $maxAllowedP) {
+                # Zona 1: DENTRO de markers = conocimiento curado. Solo knowledge-curator.
+                if ($agentTypeP -eq "knowledge-curator") {
+                    Write-DebugLog "project CLAUDE.md Edit within markers by knowledge-curator: ALLOW"
+                    Emit-Allow
+                } else {
+                    Emit-Deny "Project CLAUDE.md Edit falls inside the AUTO-CURATED zone (zona 1: curated knowledge). Only knowledge-curator may edit between markers. Caller='$agentTypeP' (root/absent=<unknown>). Path: $absPath"
+                }
+            } else {
+                # Zona 2: FUERA o cruza markers = doctrina del sistema (roster, hooks,
+                # invariantes, comandos). Trabajo legitimo de root. DIFERENCIA CLAVE vs
+                # Regla C-usuario, que en esta misma zona DENIEGA. Aqui se PERMITE.
+                Write-DebugLog "project CLAUDE.md Edit outside markers (zona 2, system doctrine): ALLOW"
+                Emit-Allow
+            }
+        }
     }
 }
 

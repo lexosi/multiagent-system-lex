@@ -26,6 +26,13 @@ CONTRACT REMINDER (why assertions never read the exit code):
 
 HERMETIC: env MULTIAGENT_PATHS_CONFIG points at a temp fixture so disk-scanning
 branches (sentinel scan) hit an empty fixture, not the real repo/user files.
+
+RULE C (project CLAUDE.md governed by its curated zone): those cases use SYNTHETIC
+fixtures (a temp CLAUDE.md with/without AUTO-CURATED markers), never real repo/user
+paths. The accented case covers non-ASCII old_string LOCALIZATION: the fixture is read
+as UTF-8 and json.dumps escapes the payload to ASCII escapes, so raw UTF-8 bytes
+on stdin are NOT exercised here -- that stdin path is guaranteed only by the
+byte-identical hook itself. It goes red if the file read-encoding or matching breaks.
 """
 
 import json
@@ -48,6 +55,7 @@ REPO_ROOT = Path(_OVERRIDE).resolve() if _OVERRIDE else Path(__file__).resolve()
 HOOKS_DIR = REPO_ROOT / "hooks"
 HOOK_ADVISORY = HOOKS_DIR / "pretooluse-verse-kb-advisory.ps1"
 HOOK_SCOPE = HOOKS_DIR / "pretooluse-block-scope-territory.ps1"
+HOOK_GUARD = HOOKS_DIR / "pretooluse-guard-protected-files.ps1"
 
 PWSH = shutil.which("pwsh")
 
@@ -76,6 +84,46 @@ def _fixture_root():
     return root
 
 
+# Rule C fixture substrings, kept stable so tests and the synthetic file agree.
+# U+00F3 = 'o'+acute, U+00F1 = 'n'+tilde. Built via chr() so this .py stays
+# pure-ASCII on disk while the written fixture (UTF-8) carries the real glyphs.
+_O_ACUTE = chr(0x00F3)  # LATIN SMALL LETTER O WITH ACUTE
+_N_TILDE = chr(0x00F1)  # LATIN SMALL LETTER N WITH TILDE
+_GUARD_OUTSIDE_ASCII = "OUTSIDE doctrine line"
+_GUARD_INSIDE_ASCII = "INSIDE curated entry"
+_GUARD_OUTSIDE_ACCENTED = (
+    "configuraci" + _O_ACUTE + "n con tilde: acci" + _O_ACUTE + "n " + _N_TILDE
+)
+
+
+def _synth_claudemd(with_markers=True):
+    """Write a synthetic CLAUDE.md into a fresh temp dir; return its path (str).
+
+    The temp prefix deliberately avoids the substring 'audit' (Rule C skips any
+    path containing 'audit'). Basename is always CLAUDE.md — that is the whole
+    discriminator Rule C keys on.
+
+      with_markers=True  -> an OUTSIDE line (ASCII) + an OUTSIDE line (accented,
+                            non-ASCII) BEFORE the START marker, the marker pair on
+                            their own column-0 lines, and one line INSIDE.
+      with_markers=False -> plain content, zero markers (markerless passthrough).
+    """
+    d = Path(tempfile.mkdtemp(prefix="claudemd_fx_"))
+    path = d / "CLAUDE.md"
+    if with_markers:
+        content = (
+            f"{_GUARD_OUTSIDE_ASCII}\n"
+            f"{_GUARD_OUTSIDE_ACCENTED}\n"
+            "<!-- AUTO-CURATED:START -->\n"
+            f"{_GUARD_INSIDE_ASCII}\n"
+            "<!-- AUTO-CURATED:END -->\n"
+        )
+    else:
+        content = "plain line\nno markers at all here\n"
+    path.write_text(content, encoding="utf-8")
+    return str(path)
+
+
 def run_hook(hook_path, payload_dict):
     """Feed payload JSON to the hook via pwsh stdin. Return raw stdout (str).
 
@@ -87,7 +135,7 @@ def run_hook(hook_path, payload_dict):
     env["MULTIAGENT_PATHS_CONFIG"] = str(fx / "config" / "paths.json")
     proc = subprocess.run(
         [PWSH, "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(hook_path)],
-        input=payload, capture_output=True, text=True, env=env,
+        input=payload, capture_output=True, text=True, encoding="utf-8", env=env,
     )
     return proc.stdout
 
@@ -177,6 +225,86 @@ def test_scope_real_verse_allowed():
     assert decision_of(run_hook(HOOK_SCOPE, _edit(real_verse, None))) == "allow"
 
 
+# --- Rule C: any CLAUDE.md governed by its declared curated zone (markers) ---
+# Synthetic fixtures only (temp CLAUDE.md), never a real repo/user path. RED-first:
+# these define the ported contract; today's hook only guards the USER CLAUDE.md.
+# Guard contract is ASYMMETRIC vs the scope hook: DENY emits JSON on stdout, ALLOW
+# is SILENT (Emit-Allow, exit 0, empty stdout). So ALLOW cases assert stdout is
+# empty (same idiom as test_advisory_silent_on_py), never decision_of(...)=="allow"
+# (that reads None and would pass vacuously). Pre-port RED is exactly the 2 DENY
+# cases (write-with-markers, edit-inside-noncurator): with today's hook every temp
+# CLAUDE.md falls through to silent Emit-Allow, so the 4 allow cases already pass
+# (silent) and the 2 deny cases fail (expect "deny", get empty/None). Post-port
+# both DENY cases go green via the project-CLAUDE.md Emit-Deny branch; the allows
+# stay silent = still green.
+@_skip
+def test_guard_markerless_allow():
+    """A CLAUDE.md with no AUTO-CURATED markers is passthrough -> allow."""
+    md = _synth_claudemd(with_markers=False)
+    assert run_hook(HOOK_GUARD, _edit(md, None)).strip() == ""
+
+
+@_skip
+def test_guard_write_with_markers_deny():
+    """Zone: a whole-file Write over a markered CLAUDE.md -> deny (Write clobbers
+    the markers + doctrine, denied for everyone)."""
+    md = _synth_claudemd(with_markers=True)
+    payload = {"tool_name": "Write",
+               "tool_input": {"file_path": md},
+               "cwd": str(REPO_ROOT)}
+    assert decision_of(run_hook(HOOK_GUARD, payload)) == "deny"
+
+
+@_skip
+def test_guard_edit_outside_markers_allow():
+    """Zone 2: Edit whose old_string sits OUTSIDE the markers, agent absent
+    (== root) -> allow. Doctrine outside the curated zone is not curator turf."""
+    md = _synth_claudemd(with_markers=True)
+    payload = {"tool_name": "Edit",
+               "tool_input": {"file_path": md,
+                              "old_string": _GUARD_OUTSIDE_ASCII, "new_string": "X"},
+               "cwd": str(REPO_ROOT)}
+    assert run_hook(HOOK_GUARD, payload).strip() == ""
+
+
+@_skip
+def test_guard_edit_inside_noncurator_deny():
+    """Curated zone: Edit whose old_string sits INSIDE the markers, agent absent
+    (== root, non-curator) -> deny. Only knowledge-curator edits between markers."""
+    md = _synth_claudemd(with_markers=True)
+    payload = {"tool_name": "Edit",
+               "tool_input": {"file_path": md,
+                              "old_string": _GUARD_INSIDE_ASCII, "new_string": "X"},
+               "cwd": str(REPO_ROOT)}
+    assert decision_of(run_hook(HOOK_GUARD, payload)) == "deny"
+
+
+@_skip
+def test_guard_edit_inside_curator_allow():
+    """Curated zone: same INSIDE-markers Edit, but agent_type knowledge-curator
+    -> allow. Baked-in discriminator: only the caller identity flips the verdict."""
+    md = _synth_claudemd(with_markers=True)
+    payload = {"tool_name": "Edit",
+               "tool_input": {"file_path": md,
+                              "old_string": _GUARD_INSIDE_ASCII, "new_string": "X"},
+               "agent_type": "knowledge-curator",
+               "cwd": str(REPO_ROOT)}
+    assert run_hook(HOOK_GUARD, payload).strip() == ""
+
+
+@_skip
+def test_guard_accented_outside_allow():
+    """Encoding guard: Edit whose old_string is the ACCENTED OUTSIDE line -> allow.
+    Only passes if the non-ASCII old_string is located in-file (IndexOf >= 0). A
+    broken UTF-8 path yields IndexOf == -1 -> 'not found' -> deny -> this goes red."""
+    md = _synth_claudemd(with_markers=True)
+    payload = {"tool_name": "Edit",
+               "tool_input": {"file_path": md,
+                              "old_string": _GUARD_OUTSIDE_ACCENTED, "new_string": "X"},
+               "cwd": str(REPO_ROOT)}
+    assert run_hook(HOOK_GUARD, payload).strip() == ""
+
+
 # --- script mode: run all + prove the forced reds are really red ---
 def _main():
     if PWSH is None:
@@ -205,6 +333,14 @@ def _main():
     g("scope discriminates (deny != allow)", test_scope_discriminates)
     g("scope fast-allow bypass -> DENY", test_scope_fastallow_bypass_denied)
     g("scope real .verse -> ALLOW", test_scope_real_verse_allowed)
+
+    print("\nRule C (project CLAUDE.md by curated zone) cases:")
+    g("guard markerless -> ALLOW", test_guard_markerless_allow)
+    g("guard Write w/ markers -> DENY", test_guard_write_with_markers_deny)
+    g("guard Edit outside markers -> ALLOW", test_guard_edit_outside_markers_allow)
+    g("guard Edit inside non-curator -> DENY", test_guard_edit_inside_noncurator_deny)
+    g("guard Edit inside curator -> ALLOW", test_guard_edit_inside_curator_allow)
+    g("guard accented outside -> ALLOW", test_guard_accented_outside_allow)
 
     # Forced reds (technique A): wrong expectations MUST fail. If any of these
     # does NOT fail, the assertion is inert (e.g. reading exit code) -> suite lies.
