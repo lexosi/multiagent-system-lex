@@ -80,7 +80,7 @@ def _fixture_root():
     (root / "docs" / "agent_runs").mkdir(parents=True)
     (root / "hooks").mkdir()
     (root / "config" / "paths.json").write_text(
-        json.dumps({"knowledge_base": "F:\\knowledge"}), encoding="utf-8")
+        json.dumps({"knowledge_base": "<knowledge_root>"}), encoding="utf-8")
     return root
 
 
@@ -175,7 +175,7 @@ def _edit(file_path, agent_type=None):
 # --- tests (collected by pytest; also called by __main__) ---
 @_skip
 def test_advisory_emitted_on_verse():
-    ctx = advisory_of(run_hook(HOOK_ADVISORY, _edit("F:\\Noobs\\X\\foo.verse", "implementer")))
+    ctx = advisory_of(run_hook(HOOK_ADVISORY, _edit("<uefn_root>\\X\\foo.verse", "implementer")))
     assert ctx is not None and "ADVISORY" in ctx
 
 
@@ -221,7 +221,7 @@ def test_scope_real_verse_allowed():
     """Guards the segment anchor from over-narrowing: a real UEFN project
     .verse path (Content/Verse/*.verse) must still ALLOW via NEVER-block, so
     nobody anchors these clauses further and starts blocking legit Verse work."""
-    real_verse = "F:\\Noobs\\MyProj\\Content\\Verse\\game.verse"
+    real_verse = "<uefn_root>\\MyProj\\Content\\Verse\\game.verse"
     assert decision_of(run_hook(HOOK_SCOPE, _edit(real_verse, None))) == "allow"
 
 
@@ -352,7 +352,7 @@ def _main():
         reds_ok = False
     else:
         print(f"  [RED  ] R1 deny-payload asserted ALLOW -> correctly fails (got {decision_of(deny_out)!r})")
-    verse_out = run_hook(HOOK_ADVISORY, _edit("F:\\Noobs\\X\\foo.verse", "implementer"))
+    verse_out = run_hook(HOOK_ADVISORY, _edit("<uefn_root>\\X\\foo.verse", "implementer"))
     if verse_out.strip() == "":
         print("  [BUG ] R2 .verse advisory matched silent (assertion inert!)")
         reds_ok = False
